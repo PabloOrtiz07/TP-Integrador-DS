@@ -1,4 +1,4 @@
-# TP-Integrador-DS
+# TP-Integrador-Diseño de sistemas
 
 # Grupo 8
 * Pablo Ortiz
