@@ -6,3 +6,4 @@
 * Victor Valentin
 * Soledad Leiva
 * Maximiliano Moyano
+* Julian Lopez
