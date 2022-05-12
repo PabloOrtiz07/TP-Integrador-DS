@@ -8,4 +8,9 @@ public class ValidadorLogin {
     int cantidadIntentos = 0;
     double segundoBloqueo = (1/2 * (pow(2,cantidadIntentos) - 1));
 
+    private boolean esValidoUsuarioYContrasenia(String usuario, String contrasenia){
+
+
+    }
+
 }

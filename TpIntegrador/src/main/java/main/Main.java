@@ -19,7 +19,7 @@ public class Main {
     }
 
     private static void login() {
-        /*Todo
+
         Scanner entrada = new Scanner(System.in);
         String usuario, contrasena;
         ValidadorLogin validadorLogin = new ValidadorLogin();
@@ -28,7 +28,6 @@ public class Main {
         usuario = entrada.nextLine();
         System.out.println("Ingrese contrasena: ");
         contrasena = entrada.nextLine();
-        */
 
 
     }
