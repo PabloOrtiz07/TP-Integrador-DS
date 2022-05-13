@@ -5,6 +5,8 @@ import validador.ValidadorLogin;
 import java.io.IOException;
 import java.util.*;
 
+import static java.lang.Math.pow;
+
 
 public class Main {
 
@@ -17,25 +19,11 @@ public class Main {
         else if(seleccion == 2) login();
         else System.out.println("Seleccion invalida terminando programa");
     }
-
-    private static void login() {
-
-        Scanner entrada = new Scanner(System.in);
-        String usuario, contrasena;
-        ValidadorLogin validadorLogin = new ValidadorLogin();
-
-        System.out.println("Ingrese usuario: ");
-        usuario = entrada.nextLine();
-        System.out.println("Ingrese contrasena: ");
-        contrasena = entrada.nextLine();
-
-
-    }
-
     private static void registrarse() throws IOException {
         Scanner entrada = new Scanner(System.in);
         String usuario, contrasena;
         ValidadorContrasenaSegura validadorContrasenaSegura = new ValidadorContrasenaSegura();
+
 
         System.out.println("Ingrese usuario: ");
         usuario = entrada.nextLine();
@@ -47,5 +35,25 @@ public class Main {
         else
             System.out.println("Intente con una nueva contraseña");
     }
+
+    private static void login() {
+        Scanner entrada = new Scanner(System.in);
+        String usuario, contrasena;
+        ValidadorLogin validadorLogin = new ValidadorLogin();
+        boolean loginValido = false;
+
+        //ciclo hasta un login valido solamente para poder probar que funciona el bloqueo por error
+        //si no el programa terminaria su ejecucion y por como esta implementado ahora mismo se resetearian los valores de intentos
+        while(!loginValido){
+            System.out.println("Ingrese usuario: ");
+            usuario = entrada.nextLine();
+            System.out.println("Ingrese contrasena: ");
+            contrasena = entrada.nextLine();
+            loginValido = validadorLogin.validarLogin(usuario, contrasena);
+        }
+
+    }
+
+
 }
 
