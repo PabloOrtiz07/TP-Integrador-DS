@@ -7,3 +7,6 @@
 * Soledad Leiva
 * Maximiliano Moyano
 * Julian Lopez
+
+Link video entrega 1: https://drive.google.com/file/d/1ceWwK0TtvR9K5AjXDEfxf-o_w9Aw-mYo/view?usp=sharing
+
