@@ -1,0 +1,13 @@
+Justificación Resolución Algoritmo de Bloqueo:
+Para bloquear intentos de login en un principio queríamos bloquear/aumentar el tiempo de login de una computadora en sí, pero no sabíamos bien como hacer esto.
+
+Lo que tenemos ahora es una clase ValidadorLogin con un método validarLogin el cual toma un nombre de usuario y una contraseña
+Si no existe usuario con ese nombre en el repositorio se lanza una excepción que es manejada desde el main
+
+Si lo anterior no ocurre se obtiene en el repo el usuario que contenga el mismo nombre que fue asignado
+
+Con este usuario se fija si el mismo esta bloqueado en caso positivo retorna una excepción para que sea manejada por el main tambien
+
+SI no esta bloqueado se verifica que la contraseña ingresada sea la misma que la contraseña almacenada en el repositorio, en caso de que esto ocurra el método envía un mensaje al usuario para que reinicie su cantidad de intentos erróneos y retorna true para que desde el main se muestre por consola un mensaje de login exitoso
+
+En caso de que no coincida se agrega un intento fallido al usuario, se obtienen los intentos fallidos del usuario y se calcula el tiempo de bloqueo de acuerdo con los intentos utilizando la formula (2^n - 1)/2. Se obtiene el momento de desbloqueo sumando a la hora actual (LocalTime.now()) los segundos de bloqueo y este valor se manda al usuario para que setee su variable bloquedoHasta, luego de esto el método retorna false para que desde el main se puede imprimir el mensaje de login fallido
