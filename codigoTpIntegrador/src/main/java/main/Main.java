@@ -1,59 +1,86 @@
 package main;
 
-import validador.ValidadorContrasenaSegura;
-import validador.ValidadorLogin;
+import Seguridad.RepositorioUsuario;
+import Seguridad.Usuario;
+import Seguridad.ValidadorContrasenaSegura;
+import Seguridad.ValidadorLogin;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.*;
-
-import static java.lang.Math.pow;
 
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Aprete 1 para registrarse, 2 para Iniciar Sesion");
+        System.out.println("Ingrese 0 para salir, 1 para registrarse, 2 para Iniciar Sesion");
         int seleccion = entrada.nextInt();
-
-        if(seleccion == 1) registrarse();
-        else if(seleccion == 2) login();
-        else System.out.println("Seleccion invalida terminando programa");
+        do{
+            if(seleccion == 1) registrarse();
+            else if(seleccion == 2) login();
+            else System.out.println("Seleccion invalida");
+            System.out.println("Ingrese 0 para salir, 1 para registrarse, 2 para Iniciar Sesion");
+            seleccion = entrada.nextInt();
+        }while (seleccion != 0);
     }
     private static void registrarse() throws IOException {
         Scanner entrada = new Scanner(System.in);
-        String usuario, contrasena;
-        ValidadorContrasenaSegura validadorContrasenaSegura = new ValidadorContrasenaSegura();
-
+        String nombre, contrasena;
 
         System.out.println("Ingrese usuario: ");
-        usuario = entrada.nextLine();
+        nombre = entrada.nextLine();
         System.out.println("Ingrese contrasena: ");
         contrasena = entrada.nextLine();
 
-        if (validadorContrasenaSegura.esContrasenaValida(contrasena, usuario))
-            System.out.println("Contraseña valida, usuario registrado"); //por ahora no registra nada solo verifica que la contraseña sea correcta
+        ValidadorContrasenaSegura validadorContrasenaSegura = new ValidadorContrasenaSegura();
+        List<Boolean> flagsErrores = validadorContrasenaSegura.esContrasenaValida(contrasena, nombre);
+
+        if(noHayErrores(flagsErrores)){
+            try {
+                RepositorioUsuario repoUsuario = RepositorioUsuario.getInstance();
+                repoUsuario.agregarUsuario(new Usuario(nombre,contrasena));
+                System.out.println("Contraseña segura. Usuario creado");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
         else
-            System.out.println("Intente con una nueva contraseña");
+            printErroresContrasena(flagsErrores);
+    }
+
+    private static boolean noHayErrores(List<Boolean> flagsErrores){
+        return !flagsErrores.contains(true);
+    }
+    private static void printErroresContrasena(@NotNull List<Boolean> flagsErrores) {
+        if(flagsErrores.get(0)) System.out.println("La contraseña debe tener al menos " + ValidadorContrasenaSegura.minimoCaracteres() + " caracteres");
+        if(flagsErrores.get(1)) System.out.println("La contraseña no puede ser igual al nombre de usuario");
+        if(flagsErrores.get(2)) System.out.println("La contraseña esta en el top 10000 contraseñas mas inseguras");
+        if(flagsErrores.get(3)) System.out.println("La contraseña no puede tener un caracter repetido 3 o mas veces de manera consecutiva");
+        if(flagsErrores.get(4)) System.out.println("La contraseña debe tener al menos 1 numero");
+        if(flagsErrores.get(5)) System.out.println("La contraseña debe tener al menos 1 mayuscula");
+        if(flagsErrores.get(6)) System.out.println("La contraseña debe tener al menos 1 minuscula");
+        if(flagsErrores.get(7)) System.out.println("La contraseña debe tener al menos 1 caracter especial");
     }
 
     private static void login() {
         Scanner entrada = new Scanner(System.in);
-        String usuario, contrasena;
         ValidadorLogin validadorLogin = new ValidadorLogin();
-        boolean loginValido = false;
 
-        //ciclo hasta un login valido solamente para poder probar que funciona el bloqueo por error
-        //si no el programa terminaria su ejecucion y por como esta implementado ahora mismo se resetearian los valores de intentos
-        while(!loginValido){
-            System.out.println("Ingrese usuario: ");
-            usuario = entrada.nextLine();
-            System.out.println("Ingrese contrasena: ");
-            contrasena = entrada.nextLine();
-            loginValido = validadorLogin.validarLogin(usuario, contrasena);
+        System.out.println("Ingrese usuario: ");
+        String nombre = entrada.nextLine();
+        System.out.println("Ingrese contrasena: ");
+        String contrasena = entrada.nextLine();
+
+        try{
+            boolean loginValido = validadorLogin.validarLogin(nombre, contrasena);
+            if (loginValido)
+                System.out.println("Login exitoso.");
+            else
+                System.out.println("Error al intentar realizar el Login. Ha sido bloqueado");
+        } catch (Exception e) {
+                System.out.println(e.getMessage());
         }
-
     }
-
-
 }
 
