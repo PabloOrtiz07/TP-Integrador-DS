@@ -33,5 +33,4 @@ public class RepositorioUsuario {
             return usuarios.stream().filter(usuarioEnRepo ->nombre.equals(usuarioEnRepo.getNombre())).findAny().get();
         return null;
     }
-
 }

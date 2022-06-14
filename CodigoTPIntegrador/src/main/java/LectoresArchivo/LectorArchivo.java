@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
+
+//TODO: no son interfaces, son clases cambiar eso en el modelo
 public class LectorArchivo {
     public Boolean estaEnArchivo(String busqueda, String nombreArchivo) throws IOException {
         URL url = getClass().getClassLoader().getResource(nombreArchivo);

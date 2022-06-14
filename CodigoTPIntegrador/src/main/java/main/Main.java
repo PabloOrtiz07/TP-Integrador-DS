@@ -1,5 +1,7 @@
 package main;
 
+import Apis.DistanciaApiCalls;
+import Apis.dto.DistanciaResponse;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
@@ -19,6 +21,7 @@ public class Main {
         do{
             if(seleccion == 1) registrarse();
             else if(seleccion == 2) login();
+            else if(seleccion == 3) calcularDistancia();
             else System.out.println("Seleccion invalida");
             System.out.println("Ingrese 0 para salir, 1 para registrarse, 2 para Iniciar Sesion");
             seleccion = entrada.nextInt();
@@ -80,6 +83,15 @@ public class Main {
                 System.out.println("Error al intentar realizar el Login. Ha sido bloqueado");
         } catch (Exception e) {
                 System.out.println(e.getMessage());
+        }
+    }
+    public static void calcularDistancia(){
+        DistanciaApiCalls distanciaRestClient = new DistanciaApiCalls();
+        try{
+            DistanciaResponse distanciaResponse = distanciaRestClient.calcularDistancia();
+            System.out.println("Distancia entre las ubicaciones: " + distanciaResponse.getValor() + " " + distanciaResponse.getUnidad());
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
