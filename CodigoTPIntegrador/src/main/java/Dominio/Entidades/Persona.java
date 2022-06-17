@@ -5,7 +5,7 @@ public class Persona {
     private String nombre;
     private String apellido;
     private String numeroDocumento;
-    private String tipoDocumento;
+    private TipoDocumento tipoDocumento;
 
     private Miembro[] miembros;
 
@@ -41,11 +41,11 @@ public class Persona {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getTipoDocumento() {
+    public TipoDocumento getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 }
