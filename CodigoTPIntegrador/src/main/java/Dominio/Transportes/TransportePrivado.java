@@ -1,13 +1,10 @@
 package Dominio.Transportes;
 
-import Dominio.Transportes.TipoCombustible;
-import Dominio.Transportes.TipoVehicuoParticular;
-
 public class TransportePrivado extends Transporte{
     private boolean esServicioContratado;
     private String tipoServicio;
     private TipoCombustible tipoDeCombustible;
-    private TipoVehicuoParticular tipoTransporteVehiculo;
+    private TipoVehiculoParticular tipoTransporteVehiculo;
 
     public boolean getEsServicioContratado() {
         return esServicioContratado;

@@ -1,5 +1,7 @@
 package main;
 
+import Dominio.Entidades.Actividad;
+
 import Apis.DistanciaApiCalls;
 import Apis.dto.DistanciaResponse;
 import Seguridad.RepositorioUsuario;
@@ -8,13 +10,16 @@ import Seguridad.ValidadorContrasenaSegura;
 import Seguridad.ValidadorLogin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.*;
 
+import java.time.LocalDate;
+import java.io.*;
+import java.util.*;
+import com.opencsv.*;
+import com.opencsv.CSVReader;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main (String[] args) throws IOException {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Ingrese 0 para salir, 1 para registrarse, 2 para Iniciar Sesion");
         int seleccion = entrada.nextInt();
@@ -91,6 +96,36 @@ public class Main {
             DistanciaResponse distanciaResponse = distanciaRestClient.calcularDistancia();
             System.out.println("Distancia entre las ubicaciones: " + distanciaResponse.getValor() + " " + distanciaResponse.getUnidad());
         }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void cargaDatosDeActividad  (String path){
+        //esta lista deberia ser global?
+        List<Actividad> datosDeActividad = new ArrayList<>();
+
+        try{
+            FileReader fileReader = new FileReader(path);
+
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+
+            CSVReader csvReader = new CSVReaderBuilder(fileReader).withCSVParser(parser).build();
+            //paso la primera fila porque no me interesa
+            csvReader.readNext();
+            List<String[]> da = csvReader.readAll();
+
+            for (String[] row : da) {
+
+                Actividad actividad = new Actividad(
+                        row[0],
+                        row[1],
+                        Double.parseDouble(row[2]),
+                        row[3],
+                        LocalDate.parse(row[4])
+                );
+                datosDeActividad.add(actividad);
+            }
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }

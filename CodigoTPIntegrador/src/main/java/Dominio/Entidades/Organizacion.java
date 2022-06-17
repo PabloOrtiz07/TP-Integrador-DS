@@ -1,8 +1,7 @@
 package Dominio.Entidades;
 
 import Dominio.Lugares.Espacio;
-
-import Dominio.Medicion;
+import Dominio.Medicion.Medicion;
 
 public class Organizacion {
     private String razonSocial;
@@ -11,6 +10,7 @@ public class Organizacion {
     private TipoClasificacion tipoClasificacion;
     private Espacio espacio;
     private Medicion medicion;
+
 
     public String getRazonSocial() {
         return razonSocial;

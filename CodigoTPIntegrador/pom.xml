@@ -46,7 +46,16 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.12.3</version>
         </dependency>
+        <!--OPENCSV-->
+        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.6</version>
+        </dependency>
     </dependencies>
+
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
