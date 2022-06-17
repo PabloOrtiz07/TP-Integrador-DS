@@ -3,14 +3,20 @@ package LectoresArchivo;
 import Dominio.Medicion.Medicion;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DataTransform {
 
-    public LocalDate transformoFecha(String Periodicidad, String Periodo){
-        LocalDate fecha = LocalDate.of(2017,1,13);
-        if(Periodicidad.equals("Anual")){
+    public LocalDate transformoFecha(String periodicidad, String periodo){
 
+        if(periodicidad.equals("Anual")) {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy");
+            LocalDate fecha = LocalDate.parse(periodo, formato);
+            return fecha;
         }
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("MM-yyyy");
+        LocalDate fecha = LocalDate.parse(periodo, formato);
         return fecha;
     }
     public Medicion crearMedicion(DatoLeido datoLeido) {
