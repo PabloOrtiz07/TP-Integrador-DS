@@ -2,5 +2,7 @@ package Dominio.Entidades;
 
 public enum TipoOrganizacion {
     ONG,
-    ALGO
+    GUBERNAMENTAL,
+    EMPRESA,
+    INSTITUCION
 }

@@ -1,6 +1,6 @@
 package main;
 
-import Dominio.Entidades.Actividad;
+import Dominio.Medicion.Medicion;
 
 import Apis.DistanciaApiCalls;
 import Apis.dto.DistanciaResponse;
@@ -102,7 +102,7 @@ public class Main {
 
     public static void cargaDatosDeActividad  (String path){
         //esta lista deberia ser global?
-        List<Actividad> datosDeActividad = new ArrayList<>();
+        List<Medicion> datosDeActividad = new ArrayList<>();
 
         try{
             FileReader fileReader = new FileReader(path);
@@ -116,14 +116,14 @@ public class Main {
 
             for (String[] row : da) {
 
-                Actividad actividad = new Actividad(
+                Medicion medicion = new Medicion(
                         row[0],
                         row[1],
                         Double.parseDouble(row[2]),
                         row[3],
                         LocalDate.parse(row[4])
                 );
-                datosDeActividad.add(actividad);
+                datosDeActividad.add(medicion);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
