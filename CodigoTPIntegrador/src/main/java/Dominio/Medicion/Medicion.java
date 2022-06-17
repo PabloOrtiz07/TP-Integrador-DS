@@ -7,7 +7,7 @@ public class Medicion {
     private String tipoDeConsumo;
     private Double valor;
     private String periodicidad;
-    private LocalDate periodo;
+    private String periodo;
 
     public String getTipoDeActividad() {
         return tipoDeActividad;
@@ -41,15 +41,15 @@ public class Medicion {
         this.periodicidad = periodicidad;
     }
 
-    public LocalDate getPeriodo() {
+    public String getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(LocalDate periodo) {
+    public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
 
-    public Medicion(String tipoDeActividad, String tipoDeConsumo, Double valor, String periodicidad, LocalDate periodo) {
+    public Medicion(String tipoDeActividad, String tipoDeConsumo, Double valor, String periodicidad, String periodo) {
         this.tipoDeActividad = tipoDeActividad;
         this.tipoDeConsumo = tipoDeConsumo;
         this.valor = valor;

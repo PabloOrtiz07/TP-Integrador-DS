@@ -13,7 +13,6 @@ import java.util.List;
 public class DataLoader {
     public List<Medicion> cargaDatosDeActividad(String path){
         List<Medicion> mediciones = new ArrayList<>();
-        DataTransform datoTransform = new DataTransform();
         try{
             FileReader fileReader = new FileReader(path);
 
@@ -26,14 +25,14 @@ public class DataLoader {
 
             for (String[] row : da) {
 
-                DatoLeido datoLeido = new DatoLeido(
+                Medicion medicion = new Medicion(
                         row[0],
                         row[1],
-                        row[2],
+                        Double.parseDouble(row[2]),
                         row[3],
                         row[4]
                 );
-                mediciones.add(datoTransform.crearMedicion(datoLeido));
+                mediciones.add(medicion);
             }
 
         }catch (Exception e){
