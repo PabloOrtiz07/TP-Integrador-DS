@@ -100,34 +100,6 @@ public class Main {
         }
     }
 
-    public static void cargaDatosDeActividad  (String path){
-        //esta lista deberia ser global?
-        List<Medicion> datosDeActividad = new ArrayList<>();
 
-        try{
-            FileReader fileReader = new FileReader(path);
-
-            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
-
-            CSVReader csvReader = new CSVReaderBuilder(fileReader).withCSVParser(parser).build();
-            //paso la primera fila porque no me interesa
-            csvReader.readNext();
-            List<String[]> da = csvReader.readAll();
-
-            for (String[] row : da) {
-
-                Medicion medicion = new Medicion(
-                        row[0],
-                        row[1],
-                        Double.parseDouble(row[2]),
-                        row[3],
-                        LocalDate.parse(row[4])
-                );
-                datosDeActividad.add(medicion);
-            }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
 }
 
