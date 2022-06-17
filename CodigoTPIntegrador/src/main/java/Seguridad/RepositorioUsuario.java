@@ -2,6 +2,7 @@ package Seguridad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class RepositorioUsuario {
     private static RepositorioUsuario repoUsuario = null;
@@ -28,9 +29,7 @@ public class RepositorioUsuario {
         return usuarios.stream().anyMatch(usuarioEnRepo ->nombreUsuario.equals(usuarioEnRepo.getNombre()));
     }
 
-    public Usuario getUsuarioPorNombre(String nombre){
-        if(existeUsuarioConNombre(nombre))
-            return usuarios.stream().filter(usuarioEnRepo ->nombre.equals(usuarioEnRepo.getNombre())).findAny().get();
-        return null;
+    public Usuario getUsuarioPorNombre(String nombre) throws NoSuchElementException {
+        return usuarios.stream().filter(usuarioEnRepo ->nombre.equals(usuarioEnRepo.getNombre())).findAny().get();
     }
 }

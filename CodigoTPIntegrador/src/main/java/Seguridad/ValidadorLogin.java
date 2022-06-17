@@ -6,10 +6,6 @@ import static java.lang.Math.pow;
 public class ValidadorLogin{
     public boolean validarLogin(String nombre, String contrasena) throws Exception {
         RepositorioUsuario repoUsuario = RepositorioUsuario.getInstance();
-
-        if(!repoUsuario.existeUsuarioConNombre(nombre))
-            throw new Exception("No existe un usuario con ese Nombre");
-
         Usuario usuarioEnRepo = repoUsuario.getUsuarioPorNombre(nombre);
 
         if(usuarioEnRepo.estaBloqueado())

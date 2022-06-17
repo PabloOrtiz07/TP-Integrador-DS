@@ -1,7 +1,7 @@
 package Dominio.Transportes;
 
 public class Transporte {
-    private boolean esCompartido;
+    protected boolean esCompartido;
 
     public boolean getEsCompartido() {
         return esCompartido;

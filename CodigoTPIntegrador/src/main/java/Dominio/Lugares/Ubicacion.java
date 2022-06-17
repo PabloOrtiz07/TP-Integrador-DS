@@ -2,7 +2,6 @@ package Dominio.Lugares;
 
 public class Ubicacion {
 
-    //TODO: En el diagrama por alguna razon falto cambiar que pais y provincia tambien sean string como el resto de los campos, por ahi algun ctrl z malvado
     private String pais;
     private String provincia;
     private String localidad;
@@ -66,4 +65,5 @@ public class Ubicacion {
     public void setAltura(String altura) {
         this.altura = altura;
     }
+
 }

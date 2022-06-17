@@ -2,22 +2,22 @@ package main;
 
 import Dominio.Entidades.*;
 import Dominio.Lugares.Espacio;
+import Dominio.Lugares.Parada;
 import Dominio.Lugares.TipoEspacio;
+import Dominio.Lugares.Ubicacion;
 import Dominio.Medicion.Medicion;
 
-import Apis.DistanciaApiCalls;
-import Apis.dto.DistanciaResponse;
+import Dominio.Transportes.RepoTransportePublico;
+import Dominio.Transportes.TipoDeTransportePublico;
+import Dominio.Transportes.TransportePublico;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
 import Seguridad.ValidadorLogin;
 
-
-import java.time.LocalDate;
 import java.io.*;
 import java.util.*;
-import com.opencsv.*;
-import com.opencsv.CSVReader;
+
 
 public class Main {
 
@@ -26,9 +26,9 @@ public class Main {
         int seleccion;
         do{
             System.out.println("Menu inicio: Ingrese el numero de la opcion que quiere realizar");
-            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar area de alta en una organizacion\n5.Cargar mediciones");
+            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar transporte publico de alta");
             //Para probar
-            System.out.println("6.Mostrar organizacion existentes");
+            System.out.println("6.Mostrar organizacion existentes\n7.Mostrar Transportes publicos existentes");
             seleccion = entrada.nextInt();
             switch (seleccion){
                 case 0:
@@ -44,7 +44,7 @@ public class Main {
                     altaOrganizacion();
                     break;
                 case 4:
-                    altaArea();
+                    altaTransportePublico();
                     break;
                 case 6:
                     RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
@@ -54,6 +54,11 @@ public class Main {
                             System.out.print(area.getNombreArea() + " ");
                         System.out.println();
                     }
+                    break;
+                case 7:
+                    RepoTransportePublico repoTP = RepoTransportePublico.getInstance();
+                    for(TransportePublico transportePublico:repoTP.getTransportesPublicos())
+                        System.out.println("Linea: " + transportePublico.getLinea() + ", Tipo: " + transportePublico.getTipoTransportePublico());
                     break;
                 default:
                     System.out.println("Operacion invalida");
@@ -115,7 +120,10 @@ public class Main {
                 System.out.println("Login exitoso.");
             else
                 System.out.println("Error al intentar realizar el Login. Ha sido bloqueado");
-        } catch (Exception e) {
+        }catch (NoSuchElementException e){
+            System.out.println("No existe ese usuario");
+        }
+        catch (Exception e) {
                 System.out.println(e.getMessage());
         }
     }
@@ -170,26 +178,47 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
-    public static void altaArea() {
+    public static void altaTransportePublico(){
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Ingresa la organizacion a la que se quiere agregar el area");
-        String razonSocial = entrada.nextLine();
-        RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
-        Organizacion organizacion = repositorioOrganizaciones.getOrganizacionPorRazonSocial(razonSocial);
+        System.out.println("Ingresa el tipo de transporte publico:");
+        TipoDeTransportePublico tipoTransporte = TipoDeTransportePublico.valueOf(entrada.nextLine().toUpperCase());
 
-        if (organizacion == null) {
-            System.out.println("No existe esa organizacion");
-        } else {
-            System.out.println("Ingresa el nombre del area");
-            String nombreArea = entrada.nextLine();
-            Area area = new Area(nombreArea, organizacion);
-            try {
-                organizacion.agregarArea(area);
-                System.out.println("Area agregada con exito");
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        System.out.println("Ingresa la linea del transporte");
+        String linea = entrada.nextLine();
+
+        TransportePublico transporte = new TransportePublico(tipoTransporte,linea);
+
+        System.out.println("Agregue las paradas de la linea");
+        System.out.println("Ingresa el pais donde se encuentran las paradas");
+        String pais = entrada.nextLine();
+        System.out.println("Ingresa la provincia donde se encuentran las paradas");
+        String provincia = entrada.nextLine();
+        System.out.println("Ingresa la localidad donde se encuentran las paradas");
+        String localidad = entrada.nextLine();
+        System.out.println("Ingresa el municipio donde se encuentran las paradas");
+        String municipio = entrada.nextLine();
+
+        do{
+            System.out.println("Ingresa la calle donde se encuentra la parada");
+            String calle = entrada.nextLine();
+            System.out.println("Ingresa la altura donde se encuentra las parada");
+            String altura = entrada.nextLine();
+            System.out.println("Ingresa la distancia hacia la siguiente parada");
+            int distanciaSig = Integer.parseInt(entrada.nextLine());
+            Parada parada = new Parada(pais,provincia,localidad,municipio,calle,altura,distanciaSig);
+            transporte.agregarParada(parada);
+            System.out.println("¿Quiere agregar otra parada? (y/n)");
+        }while(entrada.nextLine().toLowerCase().equals("y"));
+
+        RepoTransportePublico repoTransportePublico = RepoTransportePublico.getInstance();
+        try {
+            repoTransportePublico.agregarTransportePublico(transporte);
+            System.out.println("Transporte agregado con exito");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
+
 }
 

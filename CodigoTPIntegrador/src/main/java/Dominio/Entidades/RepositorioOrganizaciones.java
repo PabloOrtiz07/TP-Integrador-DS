@@ -5,6 +5,7 @@ import Seguridad.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class RepositorioOrganizaciones {
     private static RepositorioOrganizaciones repositorioOrganizaciones = null;
@@ -29,10 +30,8 @@ public class RepositorioOrganizaciones {
         return organizaciones.stream().anyMatch(orgEnRepo ->orgEnRepo.getRazonSocial().equals(razonSocialOrg));
     }
 
-    public Organizacion getOrganizacionPorRazonSocial(String razonSocial){
-        if(existeOrganizacionConRazonSocial(razonSocial))
-            return organizaciones.stream().filter(orgEnRepo ->razonSocial.equals(orgEnRepo.getRazonSocial())).findAny().get();
-        return null;
+    public Organizacion getOrganizacionPorRazonSocial(String razonSocial) throws NoSuchElementException {
+        return organizaciones.stream().filter(orgEnRepo ->razonSocial.equals(orgEnRepo.getRazonSocial())).findAny().get();
     }
 
     public List<Organizacion> getOrganizaciones() {
