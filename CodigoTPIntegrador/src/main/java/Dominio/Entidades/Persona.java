@@ -1,6 +1,6 @@
 package Dominio.Entidades;
 
-//TODO: Agregar persona al paquete entidades en el diagrama
+//TODO: Agregar persona al paquete entidades en el diagramass
 public class Persona {
     private String nombre;
     private String apellido;
