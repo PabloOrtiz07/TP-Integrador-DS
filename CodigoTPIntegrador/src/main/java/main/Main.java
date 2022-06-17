@@ -1,5 +1,8 @@
 package main;
 
+import Dominio.Entidades.*;
+import Dominio.Lugares.Espacio;
+import Dominio.Lugares.TipoEspacio;
 import Dominio.Medicion.Medicion;
 
 import Apis.DistanciaApiCalls;
@@ -8,7 +11,6 @@ import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
 import Seguridad.ValidadorLogin;
-import org.jetbrains.annotations.NotNull;
 
 
 import java.time.LocalDate;
@@ -21,18 +23,45 @@ public class Main {
 
     public static void main (String[] args) throws IOException {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Ingrese 0 para salir, 1 para registrarse, 2 para Iniciar Sesion");
-        int seleccion = entrada.nextInt();
+        int seleccion;
         do{
-            if(seleccion == 1) registrarse();
-            else if(seleccion == 2) login();
-            else if(seleccion == 3) calcularDistancia();
-            else System.out.println("Seleccion invalida");
-            System.out.println("Ingrese 0 para salir, 1 para registrarse, 2 para Iniciar Sesion");
+            System.out.println("Menu inicio: Ingrese el numero de la opcion que quiere realizar");
+            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar area de alta en una organizacion\n5.Cargar mediciones");
+            //Para probar
+            System.out.println("6.Mostrar organizacion existentes");
             seleccion = entrada.nextInt();
-        }while (seleccion != 0);
+            switch (seleccion){
+                case 0:
+                    System.out.println("Saliendo del programa");
+                    break;
+                case 1:
+                    registrarUsuario();
+                    break;
+                case 2:
+                    login();
+                    break;
+                case 3:
+                    altaOrganizacion();
+                    break;
+                case 4:
+                    altaArea();
+                    break;
+                case 6:
+                    RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
+                    for(Organizacion org:repositorioOrganizaciones.getOrganizaciones()) {
+                        System.out.print("Razon social: " + org.getRazonSocial() + ". Areas: ");
+                        for (Area area : org.getAreas())
+                            System.out.print(area.getNombreArea() + " ");
+                        System.out.println();
+                    }
+                    break;
+                default:
+                    System.out.println("Operacion invalida");
+                    break;
+            }
+        }while(seleccion != 0);
     }
-    private static void registrarse() throws IOException {
+    private static void registrarUsuario() throws IOException {
         Scanner entrada = new Scanner(System.in);
         String nombre, contrasena;
 
@@ -60,7 +89,7 @@ public class Main {
     private static boolean noHayErrores(List<Boolean> flagsErrores){
         return !flagsErrores.contains(true);
     }
-    private static void printErroresContrasena(@NotNull List<Boolean> flagsErrores) {
+    private static void printErroresContrasena(List<Boolean> flagsErrores) {
         if(flagsErrores.get(0)) System.out.println("La contraseña debe tener al menos " + ValidadorContrasenaSegura.minimoCaracteres() + " caracteres");
         if(flagsErrores.get(1)) System.out.println("La contraseña no puede ser igual al nombre de usuario");
         if(flagsErrores.get(2)) System.out.println("La contraseña esta en el top 10000 contraseñas mas inseguras");
@@ -90,16 +119,77 @@ public class Main {
                 System.out.println(e.getMessage());
         }
     }
-    public static void calcularDistancia(){
-        DistanciaApiCalls distanciaRestClient = new DistanciaApiCalls();
-        try{
-            DistanciaResponse distanciaResponse = distanciaRestClient.calcularDistancia();
-            System.out.println("Distancia entre las ubicaciones: " + distanciaResponse.getValor() + " " + distanciaResponse.getUnidad());
-        }catch(Exception e) {
+    public static void altaOrganizacion(){
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Ingresa la razon social de la organizacion");
+        String razonSocial = entrada.nextLine();
+        System.out.println("Ingresa el tipo de la organizacion");
+        //De un string paso al valor del enum. Funciona pero no es muy entendible y se repite mucho siempre lo mismo
+        //Habria que ver como poder parametrizarlo
+        TipoOrganizacion tipoOrganizacion = TipoOrganizacion.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
+        System.out.println("Ingresa el tipo de clasificacion");
+        TipoClasificacion tipoClasificacion = TipoClasificacion.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
+
+        System.out.println("Ingresa el pais donde se ubica la organizacion");
+        String pais = entrada.nextLine();
+        System.out.println("Ingresa la provincia donde se ubica la organizacion");
+        String provincia = entrada.nextLine();
+        System.out.println("Ingresa la localidad donde se ubica la organizacion");
+        String localidad = entrada.nextLine();
+        System.out.println("Ingresa el municipio donde se ubica la organizacion");
+        String municipio = entrada.nextLine();
+        System.out.println("Ingresa la calle donde se ubica la organizacion");
+        String calle = entrada.nextLine();
+        System.out.println("Ingresa la altura a la que se encuentra la organizacion");
+        String altura = entrada.nextLine();
+
+        Espacio espacioOrg = new Espacio(pais,provincia,localidad,municipio,calle,altura, TipoEspacio.TRABAJO);
+        Organizacion organizacion = new Organizacion(razonSocial,tipoOrganizacion,tipoClasificacion, espacioOrg);
+
+        System.out.println("Agregue las areas de la organizacion");
+        do{
+            System.out.println("Ingresa el nombre del area");
+            String nombreArea = entrada.nextLine();
+            Area area = new Area(nombreArea, organizacion);
+            try {
+                organizacion.agregarArea(area);
+                System.out.println("Area agregada con exito");
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            System.out.println("¿Quiere agregar otra area a la organizacion? (y/n)");
+        }while (entrada.nextLine().toLowerCase().equals("y"));
+
+        RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
+        try {
+            repositorioOrganizaciones.agregarOrganizacion(organizacion);
+            System.out.println("Organizacion creada con exito");
+        }
+        catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
+    public static void altaArea() {
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Ingresa la organizacion a la que se quiere agregar el area");
+        String razonSocial = entrada.nextLine();
+        RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
+        Organizacion organizacion = repositorioOrganizaciones.getOrganizacionPorRazonSocial(razonSocial);
 
-
+        if (organizacion == null) {
+            System.out.println("No existe esa organizacion");
+        } else {
+            System.out.println("Ingresa el nombre del area");
+            String nombreArea = entrada.nextLine();
+            Area area = new Area(nombreArea, organizacion);
+            try {
+                organizacion.agregarArea(area);
+                System.out.println("Area agregada con exito");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 }
 

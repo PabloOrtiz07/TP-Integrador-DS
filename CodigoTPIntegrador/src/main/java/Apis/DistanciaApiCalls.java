@@ -14,8 +14,6 @@ import javax.ws.rs.core.Response;
 public class DistanciaApiCalls {
 
     public String obtenerToken(String mail) throws Exception {
-        //TODO: Esto del WebClient era lo que nos explico en la clase que no podia estar en otras clases,
-        // no que no se podia usar la api desde otra clases, hay que agregar todas las clases relacionadas a la API en el diagrama
         WebClient clientUsers = WebClient.create("https://ddstpa.com.ar/api/user");
 
         AutenticacionRequest autenticacionRequest = new AutenticacionRequest(mail);
