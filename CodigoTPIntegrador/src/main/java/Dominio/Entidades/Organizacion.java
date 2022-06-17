@@ -2,7 +2,9 @@ package Dominio.Entidades;
 
 import Dominio.Lugares.Espacio;
 import Dominio.Medicion.Medicion;
+import LectoresArchivo.DataLoader;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,5 +75,11 @@ public class Organizacion {
         if(areas.stream().anyMatch(area1 ->area1.getNombreArea().equals(area.getNombreArea())))
             throw new Exception("Ya existe ese area en esta organizacion");
         areas.add(area);
+    }
+
+    //con esto cargo las mediciones
+    public void cargaMediciones(String path){
+        DataLoader dataLoader = new DataLoader();
+        setMedicion(dataLoader.cargaDatosDeActividad(path));
     }
 }
