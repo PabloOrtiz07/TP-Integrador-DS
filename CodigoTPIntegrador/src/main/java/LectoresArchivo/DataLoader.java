@@ -29,14 +29,16 @@ public class DataLoader {
                 DatoLeido datoLeido = new DatoLeido(
                         row[0],
                         row[1],
-                        Double.parseDouble(row[2]),
+                        row[2],
                         row[3],
                         row[4]
                 );
                 mediciones.add(datoTransform.crearMedicion(datoLeido));
             }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return mediciones;
     }
 }

@@ -6,7 +6,7 @@ public class DatoLeido {
 
     private String tipoDeActividad;
     private String tipoDeConsumo;
-    private Double valor;
+    private String valor;
     private String periodicidad;
     private String periodo;
 
@@ -26,11 +26,11 @@ public class DatoLeido {
         this.tipoDeConsumo = tipoDeConsumo;
     }
 
-    public Double getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 
@@ -50,7 +50,7 @@ public class DatoLeido {
         this.periodo = periodo;
     }
 
-    public DatoLeido(String tipoDeActividad, String tipoDeConsumo, Double valor, String periodicidad, String periodo) {
+    public DatoLeido(String tipoDeActividad, String tipoDeConsumo, String valor, String periodicidad, String periodo) {
         this.tipoDeActividad = tipoDeActividad;
         this.tipoDeConsumo = tipoDeConsumo;
         this.valor = valor;
