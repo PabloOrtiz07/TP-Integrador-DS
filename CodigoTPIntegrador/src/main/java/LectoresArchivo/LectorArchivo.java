@@ -49,7 +49,7 @@ public class LectorArchivo {
                         row[1],
                         Double.parseDouble(row[2]),
                         row[3],
-                        LocalDate.parse(row[4])
+                        row[4]
                 );
                 datosDeActividad.add(medicion);
             }
