@@ -5,6 +5,11 @@ public class Area {
     private Organizacion organizacion;
     private Miembro[] miembrosArea;
 
+    public Area(String nombre, Organizacion organizacion){
+        this.nombreArea = nombre;
+        this.organizacion = organizacion;
+    }
+
     public String getNombreArea() {
         return nombreArea;
     }

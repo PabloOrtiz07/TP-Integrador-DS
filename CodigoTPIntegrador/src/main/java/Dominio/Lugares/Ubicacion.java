@@ -3,26 +3,35 @@ package Dominio.Lugares;
 public class Ubicacion {
 
     //TODO: En el diagrama por alguna razon falto cambiar que pais y provincia tambien sean string como el resto de los campos, por ahi algun ctrl z malvado
-    private int pais;
-    private int provincia;
+    private String pais;
+    private String provincia;
     private String localidad;
     private String municipio;
     private String calle;
     private String altura;
 
-    public int getPais() {
+    public Ubicacion(String pais, String provincia, String localidad, String municipio, String calle, String altura) {
+        this.pais = pais;
+        this.provincia = provincia;
+        this.localidad = localidad;
+        this.municipio = municipio;
+        this.calle = calle;
+        this.altura = altura;
+    }
+
+    public String getPais() {
         return pais;
     }
 
-    public void setPais(int pais) {
+    public void setPais(String pais) {
         this.pais = pais;
     }
 
-    public int getProvincia() {
+    public String getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(int provincia) {
+    public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
