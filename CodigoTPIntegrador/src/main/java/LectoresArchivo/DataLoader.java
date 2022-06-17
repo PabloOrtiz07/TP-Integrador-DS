@@ -7,11 +7,13 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataLoader {
-    public void cargaDaatosDeActividad(String path){
-
+    public List<Medicion> cargaDatosDeActividad(String path){
+        List<Medicion> mediciones = new ArrayList<>();
+        DataTransform datoTransform = new DataTransform();
         try{
             FileReader fileReader = new FileReader(path);
 
@@ -24,13 +26,14 @@ public class DataLoader {
 
             for (String[] row : da) {
 
-                Medicion medicion = new Medicion(
+                DatoLeido datoLeido = new DatoLeido(
                         row[0],
                         row[1],
                         Double.parseDouble(row[2]),
                         row[3],
                         row[4]
                 );
+                mediciones.add(datoTransform.crearMedicion(datoLeido));
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
