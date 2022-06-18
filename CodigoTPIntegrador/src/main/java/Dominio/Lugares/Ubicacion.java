@@ -9,13 +9,13 @@ public class Ubicacion {
     private String calle;
     private String altura;
 
-    public Ubicacion(String pais, String provincia, String localidad, String municipio, String calle, String altura) {
-        this.pais = pais;
-        this.provincia = provincia;
-        this.localidad = localidad;
-        this.municipio = municipio;
-        this.calle = calle;
-        this.altura = altura;
+    public Ubicacion(String[] datosUbicacion) {
+        this.pais = datosUbicacion[0];
+        this.provincia = datosUbicacion[1];
+        this.localidad = datosUbicacion[2];
+        this.municipio = datosUbicacion[3];
+        this.calle = datosUbicacion[4];
+        this.altura = datosUbicacion[5];
     }
 
     public String getPais() {

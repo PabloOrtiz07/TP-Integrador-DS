@@ -6,7 +6,10 @@ import LectoresArchivo.DataLoader;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class Organizacion {
     private String razonSocial;
@@ -15,6 +18,7 @@ public class Organizacion {
     private Espacio espacio;
     private List<Area> areas = new ArrayList<>();
     private List<Medicion> mediciones = new ArrayList<>();
+    private  HashMap<Miembro, Area> solicitudes = new HashMap<Miembro, Area>();
 
     public Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, TipoClasificacion tipoClasificacion, Espacio espacio) {
         this.razonSocial = razonSocial;
@@ -77,9 +81,33 @@ public class Organizacion {
         areas.add(area);
     }
 
+    public Area getAreaPorNombre(String nombreArea){
+       return areas.stream().filter(area -> area.getNombreArea().equals(nombreArea)).findAny().get();
+    }
+    public List<Miembro> getMiembros(){
+        return areas.stream().flatMap(area -> area.getMiembrosArea().stream()).collect(Collectors.toList());
+    }
+    public Miembro getMiembroPorDocumento(String documento){
+       return areas.stream().map(area -> area.getMiembroPorDocumento(documento)).findAny().get();
+    }
+
+    public void recibirSolicitud(Miembro miembro, String nombreArea) throws NoSuchElementException{
+        Area area = getAreaPorNombre(nombreArea);
+        solicitudes.put(miembro, area);
+    }
+    public void aceptarSolicitud(Miembro miembro) throws NoSuchElementException{
+        Area area = solicitudes.get(miembro);
+        area.agregarMiembro(miembro);
+        miembro.asociarAArea(area);
+        solicitudes.remove(miembro);
+    }
+
     //con esto cargo las mediciones
     public void cargaMediciones(String path){
         DataLoader dataLoader = new DataLoader();
         setMedicion(dataLoader.cargaDatosDeActividad(path));
     }
+
+
+
 }

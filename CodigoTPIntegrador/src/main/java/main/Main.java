@@ -10,10 +10,11 @@ import Dominio.Medicion.Medicion;
 import Dominio.Transportes.RepoTransportePublico;
 import Dominio.Transportes.TipoDeTransportePublico;
 import Dominio.Transportes.TransportePublico;
+import Dominio.Viajes.Trayecto;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
-import Seguridad.ValidadorLogin;
+
 
 import java.io.*;
 import java.util.*;
@@ -26,8 +27,8 @@ public class Main {
         int seleccion;
         do{
             System.out.println("Menu inicio: Ingrese el numero de la opcion que quiere realizar");
-            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar transporte publico de alta");
-            //Para probar
+            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar transporte publico de alta\n5.Cargar trayecto");
+            //Para probar que se guardan correctamente en los repos
             System.out.println("6.Mostrar organizacion existentes\n7.Mostrar Transportes publicos existentes");
             seleccion = entrada.nextInt();
             switch (seleccion){
@@ -107,24 +108,30 @@ public class Main {
 
     private static void login() {
         Scanner entrada = new Scanner(System.in);
-        ValidadorLogin validadorLogin = new ValidadorLogin();
 
         System.out.println("Ingrese usuario: ");
         String nombre = entrada.nextLine();
         System.out.println("Ingrese contrasena: ");
         String contrasena = entrada.nextLine();
 
+        RepositorioUsuario repoUsuario = RepositorioUsuario.getInstance();
         try{
-            boolean loginValido = validadorLogin.validarLogin(nombre, contrasena);
-            if (loginValido)
+            Usuario usuarioEnRepo = repoUsuario.getUsuarioPorNombre(nombre);
+            boolean loginValido = usuarioEnRepo.validarContrasenaCorrecta(contrasena);
+            if (loginValido) {
                 System.out.println("Login exitoso.");
-            else
+                usuarioEnRepo.reiniciarIntentosFallidos();
+            }
+            else {
                 System.out.println("Error al intentar realizar el Login. Ha sido bloqueado");
-        }catch (NoSuchElementException e){
+                usuarioEnRepo.bloquearusuario();
+            }
+        }
+        catch (NoSuchElementException e){
             System.out.println("No existe ese usuario");
         }
-        catch (Exception e) {
-                System.out.println(e.getMessage());
+        catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
     public static void altaOrganizacion(){
@@ -138,20 +145,10 @@ public class Main {
         System.out.println("Ingresa el tipo de clasificacion");
         TipoClasificacion tipoClasificacion = TipoClasificacion.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
 
-        System.out.println("Ingresa el pais donde se ubica la organizacion");
-        String pais = entrada.nextLine();
-        System.out.println("Ingresa la provincia donde se ubica la organizacion");
-        String provincia = entrada.nextLine();
-        System.out.println("Ingresa la localidad donde se ubica la organizacion");
-        String localidad = entrada.nextLine();
-        System.out.println("Ingresa el municipio donde se ubica la organizacion");
-        String municipio = entrada.nextLine();
-        System.out.println("Ingresa la calle donde se ubica la organizacion");
-        String calle = entrada.nextLine();
-        System.out.println("Ingresa la altura a la que se encuentra la organizacion");
-        String altura = entrada.nextLine();
+        String[] datosUbicacion = leerDatosUbicacion();
 
-        Espacio espacioOrg = new Espacio(pais,provincia,localidad,municipio,calle,altura, TipoEspacio.TRABAJO);
+
+        Espacio espacioOrg = new Espacio(datosUbicacion, TipoEspacio.TRABAJO);
         Organizacion organizacion = new Organizacion(razonSocial,tipoOrganizacion,tipoClasificacion, espacioOrg);
 
         System.out.println("Agregue las areas de la organizacion");
@@ -167,7 +164,7 @@ public class Main {
                 System.out.println(e.getMessage());
             }
             System.out.println("¿Quiere agregar otra area a la organizacion? (y/n)");
-        }while (entrada.nextLine().toLowerCase().equals("y"));
+        }while (entrada.nextLine().equalsIgnoreCase("y"));
 
         RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
         try {
@@ -179,21 +176,28 @@ public class Main {
         }
     }
 
-    public static void vincularOrganizacionConMiembro(Miembro miembro){
+    public static void vincularMiembroConOrganizacion(){
         Scanner entrada = new Scanner(System.in);
+        System.out.println("Ingrese el nombre del miembro: ");
+        String nombre = entrada.nextLine();
+        System.out.println("Ingrese el apellido del miembro: ");
+        String apellido = entrada.nextLine();
+        System.out.println("Ingrese el tipo de documento del miembro: ");
+        TipoDocumento tipoDocumento  = TipoDocumento.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
+        System.out.println("Ingrese el numero de documento: ");
+        String numeroDocumento = entrada.nextLine();
+        Persona persona = new Persona(nombre, apellido, numeroDocumento, tipoDocumento);
+        Miembro miembro = new Miembro(persona);
+
         System.out.println("Ingrese la organizacion:");
         String razonSocial = entrada.nextLine();
+        System.out.println("Ingrese el area:");
+        String nombreArea = entrada.nextLine();
         RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
         Organizacion organizacion = repositorioOrganizaciones.getOrganizacionPorRazonSocial(razonSocial);
-        try{
-            for(int i=0; i<organizacion.getAreas().size();i++){
-                if(organizacion.getAreas().get(i).equals(miembro.getAreaPertenece())){
-                    organizacion.getAreas().get(i).getMiembrosArea().add(miembro);
-                }
-            }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+
+        miembro.enviarSolicitud(organizacion, nombreArea);
+
     }
 
     public static void altaTransportePublico(){
@@ -207,26 +211,13 @@ public class Main {
         TransportePublico transporte = new TransportePublico(tipoTransporte,linea);
 
         System.out.println("Agregue las paradas de la linea");
-        System.out.println("Ingresa el pais donde se encuentran las paradas");
-        String pais = entrada.nextLine();
-        System.out.println("Ingresa la provincia donde se encuentran las paradas");
-        String provincia = entrada.nextLine();
-        System.out.println("Ingresa la localidad donde se encuentran las paradas");
-        String localidad = entrada.nextLine();
-        System.out.println("Ingresa el municipio donde se encuentran las paradas");
-        String municipio = entrada.nextLine();
-
         do{
-            System.out.println("Ingresa la calle donde se encuentra la parada");
-            String calle = entrada.nextLine();
-            System.out.println("Ingresa la altura donde se encuentra las parada");
-            String altura = entrada.nextLine();
-            System.out.println("Ingresa la distancia hacia la siguiente parada");
+            String[] datosUbicacion = leerDatosUbicacion();
             int distanciaSig = Integer.parseInt(entrada.nextLine());
-            Parada parada = new Parada(pais,provincia,localidad,municipio,calle,altura,distanciaSig);
+            Parada parada = new Parada(datosUbicacion,distanciaSig);
             transporte.agregarParada(parada);
             System.out.println("¿Quiere agregar otra parada? (y/n)");
-        }while(entrada.nextLine().toLowerCase().equals("y"));
+        }while(entrada.nextLine().equalsIgnoreCase("y"));
 
         RepoTransportePublico repoTransportePublico = RepoTransportePublico.getInstance();
         try {
@@ -237,6 +228,27 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
+
+    private static String[] leerDatosUbicacion(){
+        Scanner entrada = new Scanner(System.in);
+        String[] datosUbicacion = new String[6];
+        System.out.println("Datos de final del tramo: ");
+        System.out.println("Ingresa el pais");
+        datosUbicacion[0] = entrada.nextLine();
+        System.out.println("Ingresa la provincia");
+        datosUbicacion[1] = entrada.nextLine();
+        System.out.println("Ingresa la localidad donde se encuentran las paradas");
+        datosUbicacion[2] = entrada.nextLine();
+        System.out.println("Ingresa el municipio donde se encuentran las paradas");
+        datosUbicacion[3] = entrada.nextLine();
+        System.out.println("Ingresa la calle donde se encuentra la parada");
+        datosUbicacion[4] = entrada.nextLine();
+        System.out.println("Ingresa la altura donde se encuentra las parada");
+        datosUbicacion[5]= entrada.nextLine();
+
+        return datosUbicacion;
+    }
+
 
 }
 

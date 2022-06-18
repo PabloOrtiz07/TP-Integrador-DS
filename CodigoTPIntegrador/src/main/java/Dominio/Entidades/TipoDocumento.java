@@ -3,6 +3,6 @@ package Dominio.Entidades;
 public enum TipoDocumento {
     DNI,
     PASAPORTE,
-    LIBRETACIVICA,
-    LIBREAENROLAMIENTO
+    LIBRETA_CIVICA,
+    LIBRETA_ENROLAMIENTO
 }

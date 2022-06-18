@@ -6,6 +6,7 @@ import java.util.List;
 public class Area {
     private String nombreArea;
     private Organizacion organizacion;
+
     private List<Miembro> miembrosArea = new ArrayList<>() ;
 
     public List<Miembro> getMiembrosArea() {
@@ -15,6 +16,7 @@ public class Area {
     public void setMiembrosArea(List<Miembro> miembrosArea) {
         this.miembrosArea = miembrosArea;
     }
+
 
     public Area(String nombre, Organizacion organizacion){
         this.nombreArea = nombre;
@@ -35,6 +37,15 @@ public class Area {
 
     public void setOrganizacion(Organizacion organizacion) {
         this.organizacion = organizacion;
+    }
+
+
+    public Miembro getMiembroPorDocumento(String documento){
+        return miembrosArea.stream().filter(miembro ->miembro.getDocumentoMiembro().equals(documento)).findAny().get();
+    }
+
+    public void agregarMiembro(Miembro miembro){
+        miembrosArea.add(miembro);
     }
 
 }

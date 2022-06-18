@@ -6,6 +6,13 @@ public class TransportePrivado extends Transporte{
     private TipoCombustible tipoDeCombustible;
     private TipoVehiculoParticular tipoTransporteVehiculo;
 
+    public TransportePrivado(boolean esServicioContratado, String tipoServicio, TipoCombustible tipoDeCombustible, TipoVehiculoParticular tipoTransporteVehiculo) {
+        this.esServicioContratado = esServicioContratado;
+        this.tipoServicio = tipoServicio;
+        this.tipoDeCombustible = tipoDeCombustible;
+        this.tipoTransporteVehiculo = tipoTransporteVehiculo;
+    }
+
     public boolean getEsServicioContratado() {
         return esServicioContratado;
     }

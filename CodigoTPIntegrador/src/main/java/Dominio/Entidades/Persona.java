@@ -10,6 +10,13 @@ public class Persona {
     private String numeroDocumento;
     private TipoDocumento tipoDocumento;
 
+    public Persona(String nombre, String apellido, String numeroDocumento, TipoDocumento tipoDocumento) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.numeroDocumento = numeroDocumento;
+        this.tipoDocumento = tipoDocumento;
+    }
+
     private List<Miembro> miembros = new ArrayList<>();
 
     public List<Miembro> getMiembros() {

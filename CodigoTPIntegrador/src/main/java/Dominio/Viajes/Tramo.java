@@ -7,11 +7,20 @@ import Dominio.Transportes.Transporte;
 import java.util.*;
 
 public class Tramo {
+
+    public Tramo(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Trayecto trayecto, Transporte medioTransporte, List<Miembro> miembros) {
+        this.ubicacionInicio = ubicacionInicio;
+        this.ubicacionFinal = ubicacionFinal;
+        this.trayecto = trayecto;
+        this.medioTransporte = medioTransporte;
+        this.miembrosTramo = miembros;
+    }
+    private List<Miembro> miembrosTramo = new ArrayList<>();
     private Ubicacion ubicacionInicio;
     private Ubicacion ubicacionFinal;
     private Trayecto trayecto;
     private Transporte medioTransporte;
-    private List<Miembro> miembrosTramo = new ArrayList<>();
+
 
     public List<Miembro> getMiembrosTramo() {
         return miembrosTramo;

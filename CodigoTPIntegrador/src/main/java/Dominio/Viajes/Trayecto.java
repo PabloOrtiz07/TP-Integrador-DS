@@ -3,6 +3,7 @@ package Dominio.Viajes;
 import Dominio.Entidades.Miembro;
 import Dominio.Lugares.Ubicacion;
 import java.util.*;
+import java.util.List;
 
 
 public class Trayecto {
@@ -10,6 +11,10 @@ public class Trayecto {
     private Ubicacion ubicacionFinal;
     private List<Tramo> tramosTrayecto = new ArrayList<>();
 
+    public Trayecto(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal){
+        this.ubicacionInicio = ubicacionInicio;
+        this.ubicacionFinal = ubicacionFinal;
+    }
     public Ubicacion getUbicacionInicio() {
         return ubicacionInicio;
     }
@@ -32,5 +37,15 @@ public class Trayecto {
 
     public void setTramosTrayecto(List<Tramo> tramosTrayecto) {
         this.tramosTrayecto = tramosTrayecto;
+    }
+
+    public void agregarTramo(Tramo tramo)throws Exception{
+        if(tramosTrayecto.isEmpty()){
+            if(!tramo.getUbicacionInicio().equals(this.ubicacionFinal))
+                throw new Exception("El inicio del primer tramo debe coincidir con el inicio del trayecto");
+        }
+        else if(!tramo.getUbicacionInicio().equals(tramosTrayecto.get(tramosTrayecto.size() - 1).getUbicacionFinal()))
+            throw new Exception("El inicio del tramo debe coincidir con el final del tramo anterior");
+        tramosTrayecto.add(tramo);
     }
 }
