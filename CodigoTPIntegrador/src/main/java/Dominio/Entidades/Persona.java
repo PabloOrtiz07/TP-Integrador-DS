@@ -1,5 +1,8 @@
 package Dominio.Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //TODO: Agregar persona al paquete entidades en el diagramass
 public class Persona {
     private String nombre;
@@ -7,13 +10,13 @@ public class Persona {
     private String numeroDocumento;
     private TipoDocumento tipoDocumento;
 
-    private Miembro[] miembros;
+    private List<Miembro> miembros = new ArrayList<>();
 
-    public Miembro[] getMiembros() {
+    public List<Miembro> getMiembros() {
         return miembros;
     }
 
-    public void setMiembros(Miembro[] miembros) {
+    public void setMiembros(List<Miembro> miembros) {
         this.miembros = miembros;
     }
 

@@ -4,13 +4,22 @@ import Dominio.Entidades.Miembro;
 import Dominio.Viajes.Trayecto;
 import Dominio.Lugares.Ubicacion;
 import Dominio.Transportes.Transporte;
+import java.util.*;
 
 public class Tramo {
     private Ubicacion ubicacionInicio;
     private Ubicacion ubicacionFinal;
     private Trayecto trayecto;
     private Transporte medioTransporte;
-    private Miembro[] miembrosTramo;
+    private List<Miembro> miembrosTramo = new ArrayList<>();
+
+    public List<Miembro> getMiembrosTramo() {
+        return miembrosTramo;
+    }
+
+    public void setMiembrosTramo(List<Miembro> miembrosTramo) {
+        this.miembrosTramo = miembrosTramo;
+    }
 
     public Ubicacion getUbicacionInicio() {
         return ubicacionInicio;
@@ -44,11 +53,4 @@ public class Tramo {
         this.medioTransporte = medioTransporte;
     }
 
-    public Miembro[] getMiembrosTramo() {
-        return miembrosTramo;
-    }
-
-    public void setMiembrosTramo(Miembro[] miembrosTramo) {
-        this.miembrosTramo = miembrosTramo;
-    }
 }
