@@ -33,4 +33,8 @@ public class Miembro {
     public void setTrayectos(Trayecto[] trayectos) {
         this.trayectos = trayectos;
     }
+
+    public Miembro(Area areaPertenece) {
+        this.areaPertenece = areaPertenece;
+    }
 }

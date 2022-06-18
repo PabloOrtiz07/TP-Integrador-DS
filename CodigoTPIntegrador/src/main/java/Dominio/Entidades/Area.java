@@ -1,9 +1,20 @@
 package Dominio.Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Area {
     private String nombreArea;
     private Organizacion organizacion;
-    private Miembro[] miembrosArea;
+    private List<Miembro> miembrosArea = new ArrayList<>() ;
+
+    public List<Miembro> getMiembrosArea() {
+        return miembrosArea;
+    }
+
+    public void setMiembrosArea(List<Miembro> miembrosArea) {
+        this.miembrosArea = miembrosArea;
+    }
 
     public Area(String nombre, Organizacion organizacion){
         this.nombreArea = nombre;
@@ -26,11 +37,4 @@ public class Area {
         this.organizacion = organizacion;
     }
 
-    public Miembro[] getMiembrosArea() {
-        return miembrosArea;
-    }
-
-    public void setMiembrosArea(Miembro[] miembrosArea) {
-        this.miembrosArea = miembrosArea;
-    }
 }

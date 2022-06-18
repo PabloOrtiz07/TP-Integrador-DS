@@ -178,6 +178,24 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
+
+    public static void vincularOrganizacionConMiembro(Miembro miembro){
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Ingrese la organizacion:");
+        String razonSocial = entrada.nextLine();
+        RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
+        Organizacion organizacion = repositorioOrganizaciones.getOrganizacionPorRazonSocial(razonSocial);
+        try{
+            for(int i=0; i<organizacion.getAreas().size();i++){
+                if(organizacion.getAreas().get(i).equals(miembro.getAreaPertenece())){
+                    organizacion.getAreas().get(i).getMiembrosArea().add(miembro);
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void altaTransportePublico(){
         Scanner entrada = new Scanner(System.in);
         System.out.println("Ingresa el tipo de transporte publico:");
