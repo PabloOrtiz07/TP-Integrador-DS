@@ -37,4 +37,15 @@ public class TransportePublico extends Transporte {
         }
         paradas.add(parada);
     }
+    public double distanciaRecorrida(Ubicacion ubicacion1, Ubicacion ubicacion2){
+        Parada parada1 = (Parada) ubicacion1;
+        Parada parada2 = (Parada) ubicacion2;
+        int index  = paradas.indexOf(parada1);
+        long distancia = 0;
+        while(!parada1.equals(parada2) && index < paradas.size()){
+            distancia += paradas.get(index).getDistanciaSiguiente();
+            index++;
+        }
+        return distancia;
+    }
 }

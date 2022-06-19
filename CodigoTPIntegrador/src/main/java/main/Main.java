@@ -1,10 +1,9 @@
 package main;
 
+import Apis.DistanciaApiCalls;
+import Apis.dto.DistanciaResponse;
 import Dominio.Entidades.*;
-import Dominio.Lugares.Espacio;
-import Dominio.Lugares.Parada;
-import Dominio.Lugares.TipoEspacio;
-import Dominio.Lugares.Ubicacion;
+import Dominio.Lugares.*;
 import Dominio.Medicion.Medicion;
 
 import Dominio.Transportes.RepoTransportePublico;
@@ -22,12 +21,12 @@ import java.util.*;
 
 public class Main {
 
-    public static void main (String[] args) throws IOException {
+    public static void main (String[] args) throws Exception {
         Scanner entrada = new Scanner(System.in);
         int seleccion;
         do{
             System.out.println("Menu inicio: Ingrese el numero de la opcion que quiere realizar");
-            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar transporte publico de alta\n5.Cargar trayecto");
+            System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar transporte publico de alta");
             //Para probar que se guardan correctamente en los repos
             System.out.println("6.Mostrar organizacion existentes\n7.Mostrar Transportes publicos existentes");
             seleccion = entrada.nextInt();
@@ -145,10 +144,9 @@ public class Main {
         System.out.println("Ingresa el tipo de clasificacion");
         TipoClasificacion tipoClasificacion = TipoClasificacion.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
 
-        String[] datosUbicacion = leerDatosUbicacion();
+        String[] datosUbicacion = cargarDatosUbicacion();
 
-
-        Espacio espacioOrg = new Espacio(datosUbicacion, TipoEspacio.TRABAJO);
+        Espacio espacioOrg = new Espacio(datosUbicacion[0],datosUbicacion[1],datosUbicacion[2],datosUbicacion[3],datosUbicacion[4],datosUbicacion[5], TipoEspacio.TRABAJO);
         Organizacion organizacion = new Organizacion(razonSocial,tipoOrganizacion,tipoClasificacion, espacioOrg);
 
         System.out.println("Agregue las areas de la organizacion");
@@ -212,9 +210,9 @@ public class Main {
 
         System.out.println("Agregue las paradas de la linea");
         do{
-            String[] datosUbicacion = leerDatosUbicacion();
+            String[] datosUbicacion = cargarDatosUbicacion();
             int distanciaSig = Integer.parseInt(entrada.nextLine());
-            Parada parada = new Parada(datosUbicacion,distanciaSig);
+            Parada parada = new Parada(datosUbicacion[0],datosUbicacion[1],datosUbicacion[2],datosUbicacion[3],datosUbicacion[4],datosUbicacion[5],distanciaSig);
             transporte.agregarParada(parada);
             System.out.println("¿Quiere agregar otra parada? (y/n)");
         }while(entrada.nextLine().equalsIgnoreCase("y"));
@@ -229,22 +227,22 @@ public class Main {
         }
     }
 
-    private static String[] leerDatosUbicacion(){
+    private static String[] cargarDatosUbicacion(){
         Scanner entrada = new Scanner(System.in);
         String[] datosUbicacion = new String[6];
-        System.out.println("Datos de final del tramo: ");
-        System.out.println("Ingresa el pais");
+        System.out.println("Datos de la direccion: ");
+        System.out.println("Ingresa el pais:" );
         datosUbicacion[0] = entrada.nextLine();
-        System.out.println("Ingresa la provincia");
+        System.out.println("Ingresa la provincia:");
         datosUbicacion[1] = entrada.nextLine();
-        System.out.println("Ingresa la localidad donde se encuentran las paradas");
+        System.out.println("Ingresa la localidad:");
         datosUbicacion[2] = entrada.nextLine();
-        System.out.println("Ingresa el municipio donde se encuentran las paradas");
+        System.out.println("Ingresa el municipio:");
         datosUbicacion[3] = entrada.nextLine();
-        System.out.println("Ingresa la calle donde se encuentra la parada");
+        System.out.println("Ingresa la calle:");
         datosUbicacion[4] = entrada.nextLine();
-        System.out.println("Ingresa la altura donde se encuentra las parada");
-        datosUbicacion[5]= entrada.nextLine();
+        System.out.println("Ingresa la altura:");
+        datosUbicacion[5] = entrada.nextLine();
 
         return datosUbicacion;
     }

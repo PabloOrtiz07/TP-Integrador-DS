@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.*;
 
-import LectoresArchivo.LectorArchivo;
+import LectoresArchivo.LectorArchivoTXT;
 
 //Requerimientos que menciona Guia NIST 800-63
 //Memorized secrets SHALL be at least 8 characters in length if chosen by the subscriber
@@ -45,7 +45,7 @@ public class ValidadorContrasenaSegura {
     }
 
     private Boolean estaEnTop10000MasInseguras(String contrasena) throws IOException {
-        LectorArchivo lector = new LectorArchivo();
+        LectorArchivoTXT lector = new LectorArchivoTXT();
         return lector.estaEnArchivo(contrasena, "10000ContrasenasMasInseguras.txt");
     }
 

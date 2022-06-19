@@ -2,7 +2,7 @@ package Dominio.Transportes;
 
 import Dominio.Transportes.TransportePrivado;
 
-public class RepoTransportePrivado extends TransportePrivado {
+public class RepoTransportePrivado{
     private static RepoTransportePrivado repoTransportePrivado = null;
     private RepoTransportePrivado(){
     }

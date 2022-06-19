@@ -62,4 +62,8 @@ public class Tramo {
         this.medioTransporte = medioTransporte;
     }
 
+    public double distanciaTramo()throws Exception{
+       return this.medioTransporte.distanciaRecorrida(this.ubicacionInicio, this.ubicacionFinal);
+    }
+
 }

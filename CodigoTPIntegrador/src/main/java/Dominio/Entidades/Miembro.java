@@ -16,7 +16,7 @@ public class Miembro {
     public Miembro(Persona persona) {
         this.persona = persona;
     }
-    
+
     public List<Trayecto> getTrayectos() {
         return trayectos;
     }

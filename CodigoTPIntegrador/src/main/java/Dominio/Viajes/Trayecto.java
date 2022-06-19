@@ -48,4 +48,16 @@ public class Trayecto {
             throw new Exception("El inicio del tramo debe coincidir con el final del tramo anterior");
         tramosTrayecto.add(tramo);
     }
+
+    public double distanciaTotal() throws Exception{
+       return tramosTrayecto.stream()
+                .mapToDouble(tramo -> {
+                    try {
+                        return tramo.distanciaTramo();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .sum();
+    }
 }

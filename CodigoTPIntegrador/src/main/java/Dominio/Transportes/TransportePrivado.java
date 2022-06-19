@@ -1,5 +1,9 @@
 package Dominio.Transportes;
 
+import Apis.DistanciaApiCalls;
+import Apis.dto.DistanciaResponse;
+import Dominio.Lugares.Ubicacion;
+
 public class TransportePrivado extends Transporte{
     private boolean esServicioContratado;
     private String tipoServicio;
@@ -29,5 +33,10 @@ public class TransportePrivado extends Transporte{
         this.tipoServicio = tipoServicio;
     }
 
+    public double distanciaRecorrida(Ubicacion ubicacion1, Ubicacion ubicacion2)throws Exception{
+        DistanciaApiCalls calculoDistancia = new DistanciaApiCalls();
+        DistanciaResponse distanciaResponse = calculoDistancia.calcularDistancia(ubicacion1,ubicacion2);
+        return Double.valueOf(distanciaResponse.getValor());
+    }
 }
 
