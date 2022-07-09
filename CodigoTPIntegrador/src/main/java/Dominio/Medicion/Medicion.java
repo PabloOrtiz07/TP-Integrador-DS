@@ -9,6 +9,16 @@ public class Medicion {
     private String periodicidad;
     private String periodo;
 
+    private Integer factorEmision;
+
+    public Integer getFactorEmision() {
+        return factorEmision;
+    }
+
+    public void setFactorEmision(Integer factorEmision) {
+        this.factorEmision = factorEmision;
+    }
+
     public String getTipoDeActividad() {
         return tipoDeActividad;
     }

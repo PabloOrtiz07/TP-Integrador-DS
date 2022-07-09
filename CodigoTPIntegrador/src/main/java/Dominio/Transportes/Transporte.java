@@ -15,4 +15,6 @@ public abstract class Transporte {
 
     public abstract double distanciaRecorrida(Ubicacion ubicaionOrigen, Ubicacion ubicacionFinal) throws Exception;
 
+
+
 }
