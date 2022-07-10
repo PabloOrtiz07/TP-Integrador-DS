@@ -3,7 +3,6 @@ package Dominio.Entidades;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Agregar persona al paquete entidades en el diagramass
 public class Persona {
     private String nombre;
     private String apellido;

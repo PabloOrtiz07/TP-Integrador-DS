@@ -3,17 +3,15 @@ package Dominio.Transportes;
 import Dominio.Lugares.Ubicacion;
 
 public abstract class Transporte {
-    protected boolean esCompartido;
-
-    public boolean getEsCompartido() {
-        return esCompartido;
+    protected boolean puedeCompartirse;
+    protected  CalculoDistanciaStrategy calculoDistanciaStrategy;
+    public boolean puedeCompartirse() {
+        return puedeCompartirse;
     }
 
-    public void setEsCompartido(boolean esCompartido) {
-        this.esCompartido = esCompartido;
+    public double distanciaRecorrida(Ubicacion ubicaionOrigen, Ubicacion ubicacionFinal) throws Exception{
+        return calculoDistanciaStrategy.calcularDistancia(ubicaionOrigen, ubicacionFinal);
     }
-
-    public abstract double distanciaRecorrida(Ubicacion ubicaionOrigen, Ubicacion ubicacionFinal) throws Exception;
 
 
 

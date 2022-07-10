@@ -1,6 +1,6 @@
 package Dominio.Entidades;
 
-public enum TipoDocumento {
+public enum  TipoDocumento {
     DNI,
     PASAPORTE,
     LIBRETA_CIVICA,

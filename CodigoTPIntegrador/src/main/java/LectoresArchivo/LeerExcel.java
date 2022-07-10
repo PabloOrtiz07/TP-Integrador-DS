@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataLoader {
+public class LeerExcel {
     public List<Medicion> cargaDatosDeActividad(String path){
         List<Medicion> mediciones = new ArrayList<>();
         try{

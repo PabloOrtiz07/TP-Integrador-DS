@@ -4,12 +4,10 @@ import Apis.DistanciaApiCalls;
 import Apis.dto.DistanciaResponse;
 import Dominio.Entidades.*;
 import Dominio.Lugares.*;
-import Dominio.Medicion.Medicion;
 
 import Dominio.Transportes.RepoTransportePublico;
 import Dominio.Transportes.TipoDeTransportePublico;
 import Dominio.Transportes.TransportePublico;
-import Dominio.Viajes.Trayecto;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
@@ -27,8 +25,7 @@ public class Main {
         do{
             System.out.println("Menu inicio: Ingrese el numero de la opcion que quiere realizar");
             System.out.println("0.Salir\n1.Registrar Usuario\n2.Login\n3.Dar organizacion de alta\n4.Dar transporte publico de alta");
-            //Para probar que se guardan correctamente en los repos
-            System.out.println("6.Mostrar organizacion existentes\n7.Mostrar Transportes publicos existentes");
+            System.out.println("5.Mostrar organizacion existentes");
             seleccion = entrada.nextInt();
             switch (seleccion){
                 case 0:
@@ -46,12 +43,18 @@ public class Main {
                 case 4:
                     altaTransportePublico();
                     break;
+                case 5:
+                    vincularMiembroConOrganizacion();
+                    break;
                 case 6:
                     RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
                     for(Organizacion org:repositorioOrganizaciones.getOrganizaciones()) {
                         System.out.print("Razon social: " + org.getRazonSocial() + ". Areas: ");
                         for (Area area : org.getAreas())
                             System.out.print(area.getNombreArea() + " ");
+                        System.out.println("\nContactos:");
+                        for (Contacto contacto : org.getContactos())
+                            System.out.print("Mail: " + contacto.getEmail() + " Telefono:" +contacto.getTelefono());
                         System.out.println();
                     }
                     break;
@@ -74,6 +77,9 @@ public class Main {
         nombre = entrada.nextLine();
         System.out.println("Ingrese contrasena: ");
         contrasena = entrada.nextLine();
+
+        System.out.println("Ingrese los datos del miembro al que pertenece el usuario:");
+        Miembro miembro = cargarDatosMiembro();
 
         ValidadorContrasenaSegura validadorContrasenaSegura = new ValidadorContrasenaSegura();
         List<Boolean> flagsErrores = validadorContrasenaSegura.esContrasenaValida(contrasena, nombre);
@@ -120,10 +126,11 @@ public class Main {
             if (loginValido) {
                 System.out.println("Login exitoso.");
                 usuarioEnRepo.reiniciarIntentosFallidos();
+                mostrarOperacionesTrasLogin(usuarioEnRepo);
             }
             else {
                 System.out.println("Error al intentar realizar el Login. Ha sido bloqueado");
-                usuarioEnRepo.bloquearusuario();
+                usuarioEnRepo.bloquear();
             }
         }
         catch (NoSuchElementException e){
@@ -133,7 +140,18 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
-    public static void altaOrganizacion(){
+
+    private static void mostrarOperacionesTrasLogin(Usuario usuario){
+        Scanner entrada = new Scanner(System.in);
+        Miembro miembro = usuario.getMiembroAsociado();
+        System.out.println("Bienvenido: " + miembro.getDatosPersonales());
+        System.out.println("Menu inicio: Ingrese el numero de la opcion que quiere realizar");
+        System.out.println("1.Solicitar vinculacion a organizacion, 2.Cargar Trayecto, 3.Ejecutar Calculadora");
+        int seleccion = entrada.nextInt();
+
+    }
+
+    public static void altaOrganizacion() throws Exception {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Ingresa la razon social de la organizacion");
         String razonSocial = entrada.nextLine();
@@ -153,7 +171,7 @@ public class Main {
         do{
             System.out.println("Ingresa el nombre del area");
             String nombreArea = entrada.nextLine();
-            Area area = new Area(nombreArea, organizacion);
+            Area area = new Area(nombreArea);
             try {
                 organizacion.agregarArea(area);
                 System.out.println("Area agregada con exito");
@@ -174,28 +192,20 @@ public class Main {
         }
     }
 
-    public static void vincularMiembroConOrganizacion(){
+    public static void vincularMiembroConOrganizacion() throws Exception {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Ingrese el nombre del miembro: ");
-        String nombre = entrada.nextLine();
-        System.out.println("Ingrese el apellido del miembro: ");
-        String apellido = entrada.nextLine();
-        System.out.println("Ingrese el tipo de documento del miembro: ");
-        TipoDocumento tipoDocumento  = TipoDocumento.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
-        System.out.println("Ingrese el numero de documento: ");
-        String numeroDocumento = entrada.nextLine();
-        Persona persona = new Persona(nombre, apellido, numeroDocumento, tipoDocumento);
-        Miembro miembro = new Miembro(persona);
-
+        Miembro miembro = cargarDatosMiembro();
         System.out.println("Ingrese la organizacion:");
         String razonSocial = entrada.nextLine();
         System.out.println("Ingrese el area:");
         String nombreArea = entrada.nextLine();
-        RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
-        Organizacion organizacion = repositorioOrganizaciones.getOrganizacionPorRazonSocial(razonSocial);
+        Organizacion organizacion = RepositorioOrganizaciones.getInstance().getOrganizacionPorRazonSocial(razonSocial);
 
+        System.out.println("Solicitud de aceptacion enviada");
         miembro.enviarSolicitud(organizacion, nombreArea);
 
+        System.out.println("Solicitud de aceptacion aceptada");
+        organizacion.aceptarSolicitud(miembro);
     }
 
     public static void altaTransportePublico(){
@@ -211,7 +221,8 @@ public class Main {
         System.out.println("Agregue las paradas de la linea");
         do{
             String[] datosUbicacion = cargarDatosUbicacion();
-            int distanciaSig = Integer.parseInt(entrada.nextLine());
+            System.out.println("Agregue la distancia a la proxima parada");
+            double distanciaSig = entrada.nextDouble();
             Parada parada = new Parada(datosUbicacion[0],datosUbicacion[1],datosUbicacion[2],datosUbicacion[3],datosUbicacion[4],datosUbicacion[5],distanciaSig);
             transporte.agregarParada(parada);
             System.out.println("¿Quiere agregar otra parada? (y/n)");
@@ -245,6 +256,20 @@ public class Main {
         datosUbicacion[5] = entrada.nextLine();
 
         return datosUbicacion;
+    }
+
+    private static Miembro cargarDatosMiembro(){
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Ingrese el nombre del miembro: ");
+        String nombre = entrada.nextLine();
+        System.out.println("Ingrese el apellido del miembro: ");
+        String apellido = entrada.nextLine();
+        System.out.println("Ingrese el tipo de documento del miembro: ");
+        TipoDocumento tipoDocumento  = TipoDocumento.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
+        System.out.println("Ingrese el numero de documento: ");
+        String numeroDocumento = entrada.nextLine();
+        Persona persona = new Persona(nombre, apellido, numeroDocumento, tipoDocumento);
+        return new Miembro(persona);
     }
 
 

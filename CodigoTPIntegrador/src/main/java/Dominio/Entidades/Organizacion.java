@@ -2,9 +2,8 @@ package Dominio.Entidades;
 
 import Dominio.Lugares.Espacio;
 import Dominio.Medicion.Medicion;
-import LectoresArchivo.DataLoader;
+import LectoresArchivo.LeerExcel;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,8 @@ public class Organizacion {
     private Espacio espacio;
     private List<Area> areas = new ArrayList<>();
     private List<Medicion> mediciones = new ArrayList<>();
+
+    private List<Contacto> contactos = new ArrayList<>();
     private  HashMap<Miembro, Area> solicitudes = new HashMap<Miembro, Area>();
 
     public Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, TipoClasificacion tipoClasificacion, Espacio espacio) {
@@ -30,54 +31,25 @@ public class Organizacion {
     public String getRazonSocial() {
         return razonSocial;
     }
-
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
-    }
-
     public TipoOrganizacion getTipoOrganizacion() {
         return tipoOrganizacion;
-    }
-
-    public void setTipoOrganizacion(TipoOrganizacion tipoOrganizacion) {
-        this.tipoOrganizacion = tipoOrganizacion;
     }
 
     public List<Area> getAreas() {
         return areas;
     }
-
-    public void setArea(List<Area> areas) {
-        this.areas = areas;
-    }
-
     public TipoClasificacion getTipoClasificacion() {
         return tipoClasificacion;
     }
 
-    public void setTipoClasificacion(TipoClasificacion tipoClasificacion) {
-        this.tipoClasificacion = tipoClasificacion;
-    }
-
-    public Espacio getEspacio() {
-        return espacio;
-    }
-
-    public void setEspacio(Espacio espacio) {
-        this.espacio = espacio;
-    }
-
-    public List<Medicion> getMedicion() {
+    public List<Medicion> getMediciones() {
         return mediciones;
-    }
-
-    public void setMedicion(List<Medicion> mediciones) {
-        this.mediciones = mediciones;
     }
 
     public void agregarArea(Area area) throws Exception{
         if(areas.stream().anyMatch(area1 ->area1.getNombreArea().equals(area.getNombreArea())))
             throw new Exception("Ya existe ese area en esta organizacion");
+        area.setOrganizacion(this);
         areas.add(area);
     }
 
@@ -98,14 +70,32 @@ public class Organizacion {
     public void aceptarSolicitud(Miembro miembro) throws NoSuchElementException{
         Area area = solicitudes.get(miembro);
         area.agregarMiembro(miembro);
-        miembro.asociarAArea(area);
         solicitudes.remove(miembro);
     }
 
-    //con esto cargo las mediciones
-    public void cargaMediciones(String path){
-        DataLoader dataLoader = new DataLoader();
-        setMedicion(dataLoader.cargaDatosDeActividad(path));
+    public void agregarContacto(Contacto contacto){
+        contactos.add(contacto);
+    }
+
+    public List<Contacto> getContactos(){
+        return contactos;
+    }
+
+    public void cargarMediciones(String path){
+        LeerExcel leerExcel = new LeerExcel();
+        mediciones.addAll(leerExcel.cargaDatosDeActividad(path));
+    }
+
+    public double calcularHC(){
+        return 0;
+    }
+
+    public Boolean estaEnLaProvincia(String provincia){
+        return espacio.getProvincia().equals(provincia);
+    }
+
+    public Boolean estaEnElMunicipio(String municipio){
+        return espacio.getMunicipio().equals(municipio);
     }
 
 

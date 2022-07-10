@@ -1,13 +1,27 @@
 package Seguridad;
 
+import Dominio.Entidades.Miembro;
+import Dominio.Entidades.Persona;
+import Dominio.Entidades.RepositorioOrganizaciones;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class RepositorioUsuario {
     private static RepositorioUsuario repoUsuario = null;
+    private List<Usuario> usuarios = new ArrayList<>();
 
+
+    //Algunos usuarios default
     private RepositorioUsuario() {
+       Usuario usuario1 = new Usuario("Usuario1", "1ContraseniaSegura!");
+       usuario1.setMiembroAsociado(RepositorioOrganizaciones.getInstance().getOrganizacionPorRazonSocial("Google").getMiembroPorDocumento("123"));
+       usuarios.add(usuario1);
+
+       Usuario usuario2 = new Usuario("Usuario2", "2ContraseniaSegura!");
+       usuario2.setMiembroAsociado(RepositorioOrganizaciones.getInstance().getOrganizacionPorRazonSocial("Google").getMiembroPorDocumento("456"));
+       usuarios.add(usuario2);
     }
 
     public static RepositorioUsuario getInstance() {
@@ -16,8 +30,6 @@ public class RepositorioUsuario {
         }
         return repoUsuario;
     }
-
-    private List<Usuario> usuarios = new ArrayList<>();
 
     public void agregarUsuario(Usuario usuario) throws Exception {
         if(repoUsuario.existeUsuarioConNombre(usuario.getNombre()))

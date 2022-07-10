@@ -18,9 +18,8 @@ public class Area {
     }
 
 
-    public Area(String nombre, Organizacion organizacion){
+    public Area(String nombre){
         this.nombreArea = nombre;
-        this.organizacion = organizacion;
     }
 
     public String getNombreArea() {
@@ -46,6 +45,7 @@ public class Area {
 
     public void agregarMiembro(Miembro miembro){
         miembrosArea.add(miembro);
+        miembro.asociarAArea(this);
     }
 
 }

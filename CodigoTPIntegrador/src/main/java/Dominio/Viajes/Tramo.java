@@ -1,6 +1,7 @@
 package Dominio.Viajes;
 
 import Dominio.Entidades.Miembro;
+import Dominio.Transportes.CalculoDistanciaStrategy;
 import Dominio.Viajes.Trayecto;
 import Dominio.Lugares.Ubicacion;
 import Dominio.Transportes.Transporte;
@@ -9,6 +10,8 @@ import java.util.*;
 public class Tramo {
 
     public Tramo(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Trayecto trayecto, Transporte medioTransporte, List<Miembro> miembros) {
+        if(!medioTransporte.puedeCompartirse() && miembros.size()>1) throw new RuntimeException("El medio de transporte de este tramo no puede ser compartido");
+
         this.ubicacionInicio = ubicacionInicio;
         this.ubicacionFinal = ubicacionFinal;
         this.trayecto = trayecto;
@@ -20,8 +23,7 @@ public class Tramo {
     private Ubicacion ubicacionFinal;
     private Trayecto trayecto;
     private Transporte medioTransporte;
-
-
+    
     public List<Miembro> getMiembrosTramo() {
         return miembrosTramo;
     }
@@ -65,5 +67,4 @@ public class Tramo {
     public double distanciaTramo()throws Exception{
        return this.medioTransporte.distanciaRecorrida(this.ubicacionInicio, this.ubicacionFinal);
     }
-
 }

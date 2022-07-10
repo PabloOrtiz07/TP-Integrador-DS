@@ -17,7 +17,8 @@ public class TransportePublico extends Transporte {
     public TransportePublico(TipoDeTransportePublico tipoTransportePublico, String linea){
         this.tipoTransportePublico = tipoTransportePublico;
         this.linea = linea;
-        this.esCompartido = false;
+        this.puedeCompartirse = false;
+        this.calculoDistanciaStrategy = new TransportePublicoStrategy();
     }
 
     public String getLinea() {
@@ -28,24 +29,16 @@ public class TransportePublico extends Transporte {
         return tipoTransportePublico;
     }
 
-    public void agregarParada(Parada parada){
-        if(paradas.isEmpty())
-            parada.setDistanciaAnterior(0);
-        else {
+    public void agregarParada(Parada paradaAgregada){
+        if(paradas.isEmpty()) {
+            paradaAgregada.setParadaAnterior(null);
+            paradaAgregada.setDistanciaAnterior(0);
+        }else {
             Parada paradaAnterior = paradas.get(paradas.size()-1);
-            parada.setDistanciaAnterior(paradaAnterior.getDistanciaSiguiente());
+            paradaAnterior.setParadaSiguiente(paradaAgregada);
+            paradaAgregada.setParadaAnterior(paradaAnterior);
+            paradaAgregada.setDistanciaAnterior(paradaAnterior.getDistanciaSiguiente());
         }
-        paradas.add(parada);
-    }
-    public double distanciaRecorrida(Ubicacion ubicacion1, Ubicacion ubicacion2){
-        Parada parada1 = (Parada) ubicacion1;
-        Parada parada2 = (Parada) ubicacion2;
-        int index  = paradas.indexOf(parada1);
-        long distancia = 0;
-        while(!parada1.equals(parada2) && index < paradas.size()){
-            distancia += paradas.get(index).getDistanciaSiguiente();
-            index++;
-        }
-        return distancia;
+        paradas.add(paradaAgregada);
     }
 }

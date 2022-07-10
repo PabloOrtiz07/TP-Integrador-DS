@@ -15,6 +15,8 @@ public class TransportePrivado extends Transporte{
         this.tipoServicio = tipoServicio;
         this.tipoDeCombustible = tipoDeCombustible;
         this.tipoTransporteVehiculo = tipoTransporteVehiculo;
+        this.puedeCompartirse = true;
+        this.calculoDistanciaStrategy = new TransportePrivadoStrategy();
     }
 
     public boolean getEsServicioContratado() {
@@ -33,10 +35,5 @@ public class TransportePrivado extends Transporte{
         this.tipoServicio = tipoServicio;
     }
 
-    public double distanciaRecorrida(Ubicacion ubicacion1, Ubicacion ubicacion2)throws Exception{
-        DistanciaApiCalls calculoDistancia = new DistanciaApiCalls();
-        DistanciaResponse distanciaResponse = calculoDistancia.calcularDistancia(ubicacion1,ubicacion2);
-        return Double.valueOf(distanciaResponse.getValor());
-    }
 }
 

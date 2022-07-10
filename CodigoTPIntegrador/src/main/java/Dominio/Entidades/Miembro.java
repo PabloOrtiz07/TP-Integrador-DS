@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Miembro {
-    private Area areaPertenece;
+    private Area areaPertenece = null;
     private Persona persona;
     private List<Tramo> tramos = new ArrayList<>();
     private List<Trayecto> trayectos = new ArrayList<>();
@@ -62,5 +62,9 @@ public class Miembro {
 
     public void agregarTramo(Tramo tramo){
         tramos.add(tramo);
+    }
+
+    public String getDatosPersonales(){
+        return persona.getNombre() + " " + persona.getApellido();
     }
 }

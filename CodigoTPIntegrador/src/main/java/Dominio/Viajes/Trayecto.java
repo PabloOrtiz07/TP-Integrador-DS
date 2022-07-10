@@ -50,14 +50,12 @@ public class Trayecto {
     }
 
     public double distanciaTotal() throws Exception{
-       return tramosTrayecto.stream()
-                .mapToDouble(tramo -> {
-                    try {
-                        return tramo.distanciaTramo();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .sum();
+       return tramosTrayecto.stream().mapToDouble(trayecto -> {
+           try {
+               return trayecto.distanciaTramo();
+           } catch (Exception e) {
+               throw new RuntimeException(e);
+           }
+       }).sum();
     }
 }

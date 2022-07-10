@@ -1,8 +1,8 @@
 package Apis.dto;
 
-public class LocalidadResponse {
-    private int id;
-    private String nombre;
+public class ApiDatosUbicacionResponse {
+    int id;
+    String nombre;
 
     public int getId() {
         return id;
@@ -19,5 +19,5 @@ public class LocalidadResponse {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 }
+
