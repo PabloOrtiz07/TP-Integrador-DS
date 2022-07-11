@@ -17,6 +17,6 @@ public class CalcularHCTotal {
     public double sumatoriaHCTotal(Organizacion organizacion){
         return calcularHCDatosActividadOtras.sumaHCOtras(organizacion)+
                 calcularHCDatosActividadPorViajeCompartido.sumaHCMiembroCompartido(organizacion)+
-                calcularHCDatosActividadOtras.sumaHCOtras(organizacion);
+                calcularHCTrayectoPorMiembro.sumaHCMiembroIndividual(organizacion);
     }
 }
