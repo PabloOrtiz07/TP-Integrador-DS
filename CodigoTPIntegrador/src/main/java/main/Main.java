@@ -8,6 +8,7 @@ import Dominio.Lugares.*;
 import Dominio.Transportes.RepoTransportePublico;
 import Dominio.Transportes.TipoDeTransportePublico;
 import Dominio.Transportes.TransportePublico;
+import EnvioNotifiaciones.Scheduler;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
@@ -20,6 +21,8 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) throws Exception {
+        Scheduler scheduler = new Scheduler();
+        scheduler.comenzar();
         Scanner entrada = new Scanner(System.in);
         int seleccion;
         do{

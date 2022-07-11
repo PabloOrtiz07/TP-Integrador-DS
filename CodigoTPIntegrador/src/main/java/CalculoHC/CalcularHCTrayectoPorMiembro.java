@@ -9,8 +9,7 @@ import java.util.List;
 public class CalcularHCTrayectoPorMiembro {
 
     public double sumaHCMiembroIndividuales(Organizacion organizacion){
-
-        return organizacion.getAreas().forEach(area -> sumaPorMiembroArea(area.getMiembrosArea()) // me falta sumar
+        return organizacion.getAreas().forEach(area -> sumaPorMiembroArea(area.getMiembrosArea())); // me falta sumar
     }
 
     public int sumaPorMiembroArea(List<Miembro> miembros){
