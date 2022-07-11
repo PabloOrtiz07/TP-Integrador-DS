@@ -13,6 +13,14 @@ public class Miembro {
     private List<Tramo> tramos = new ArrayList<>();
     private List<Trayecto> trayectos = new ArrayList<>();
 
+    public List<Tramo> getTramos() {
+        return tramos;
+    }
+
+    public void setTramos(List<Tramo> tramos) {
+        this.tramos = tramos;
+    }
+
     public Miembro(Persona persona) {
         this.persona = persona;
     }
