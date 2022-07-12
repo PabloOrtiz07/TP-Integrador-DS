@@ -41,7 +41,7 @@ public class Trayecto {
 
     public void agregarTramo(Tramo tramo)throws Exception{
         if(tramosTrayecto.isEmpty()){
-            if(!tramo.getUbicacionInicio().equals(this.ubicacionFinal))
+            if(!tramo.getUbicacionInicio().equals(this.ubicacionInicio))
                 throw new Exception("El inicio del primer tramo debe coincidir con el inicio del trayecto");
         }
         else if(!tramo.getUbicacionInicio().equals(tramosTrayecto.get(tramosTrayecto.size() - 1).getUbicacionFinal()))

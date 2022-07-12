@@ -1,5 +1,6 @@
 package Dominio.Entidades;
 
+import CalculoHC.CalculadoraHC;
 import Dominio.Lugares.Ubicacion;
 import Dominio.Transportes.Transporte;
 import Dominio.Viajes.Tramo;
@@ -12,6 +13,7 @@ public class Miembro {
     private Persona persona;
     private List<Tramo> tramos = new ArrayList<>();
     private List<Trayecto> trayectos = new ArrayList<>();
+    private CalculadoraHC calculadoraHC = new CalculadoraHC();
 
     public List<Tramo> getTramos() {
         return tramos;
@@ -57,15 +59,14 @@ public class Miembro {
     public void asociarAArea(Area area){
         this.areaPertenece = area;
     }
-    public void cargarTrayecto(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal) {
-        Trayecto trayecto = new Trayecto(ubicacionInicio, ubicacionFinal);
+    public void cargarTrayecto(Trayecto trayecto) {
         trayectos.add(trayecto);
     }
-    public void cargarTramoATrayecto(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Trayecto trayecto, Transporte transporte, List<Miembro> miembros) throws Exception {
-        Tramo tramo = new Tramo(ubicacionInicio, ubicacionFinal, trayecto, transporte, miembros);
+    public void agregarTramoATrayecto(Tramo tramo, Trayecto trayecto, Transporte transporte) throws Exception {
+        if(!trayectos.contains(trayecto))
+            throw new Exception("El miembro no tiene ese trayecto cargado");
         trayecto.agregarTramo(tramo);
-        for(Miembro miembro : miembros)
-            miembro.agregarTramo(tramo);
+        tramo.setTrayecto(trayecto);
     }
 
     public void agregarTramo(Tramo tramo){
@@ -75,4 +76,14 @@ public class Miembro {
     public String getDatosPersonales(){
         return persona.getNombre() + " " + persona.getApellido();
     }
+
+    public double calcularHCPersonal() throws Exception {
+        return calculadoraHC.calcularHcTrayectos(this.trayectos);
+    }
+
+    public double impactoMiembroEnHCOrg() throws Exception {
+        return this.calcularHCPersonal() * 100 / this.areaPertenece.getOrganizacion().calcularHC();
+    }
+
+    /**/
 }

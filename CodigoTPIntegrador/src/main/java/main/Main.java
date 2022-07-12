@@ -5,9 +5,9 @@ import Apis.dto.DistanciaResponse;
 import Dominio.Entidades.*;
 import Dominio.Lugares.*;
 
-import Dominio.Transportes.RepoTransportePublico;
-import Dominio.Transportes.TipoDeTransportePublico;
-import Dominio.Transportes.TransportePublico;
+import Dominio.Transportes.*;
+import Dominio.Viajes.Tramo;
+import Dominio.Viajes.Trayecto;
 import EnvioNotifiaciones.Scheduler;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
@@ -48,23 +48,6 @@ public class Main {
                     break;
                 case 5:
                     vincularMiembroConOrganizacion();
-                    break;
-                case 6:
-                    RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.getInstance();
-                    for(Organizacion org:repositorioOrganizaciones.getOrganizaciones()) {
-                        System.out.print("Razon social: " + org.getRazonSocial() + ". Areas: ");
-                        for (Area area : org.getAreas())
-                            System.out.print(area.getNombreArea() + " ");
-                        System.out.println("\nContactos:");
-                        for (Contacto contacto : org.getContactos())
-                            System.out.print("Mail: " + contacto.getEmail() + " Telefono:" +contacto.getTelefono());
-                        System.out.println();
-                    }
-                    break;
-                case 7:
-                    RepoTransportePublico repoTP = RepoTransportePublico.getInstance();
-                    for(TransportePublico transportePublico:repoTP.getTransportesPublicos())
-                        System.out.println("Linea: " + transportePublico.getLinea() + ", Tipo: " + transportePublico.getTipoTransportePublico());
                     break;
                 default:
                     System.out.println("Operacion invalida");

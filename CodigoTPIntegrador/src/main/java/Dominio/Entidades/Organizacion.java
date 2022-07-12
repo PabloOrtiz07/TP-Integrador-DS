@@ -1,7 +1,10 @@
 package Dominio.Entidades;
 
+import CalculoHC.CalculadoraHC;
 import Dominio.Lugares.Espacio;
+import Dominio.Lugares.Ubicacion;
 import Dominio.Medicion.Medicion;
+import Dominio.Viajes.Trayecto;
 import LectoresArchivo.LeerExcel;
 
 import java.util.ArrayList;
@@ -20,6 +23,8 @@ public class Organizacion {
 
     private List<Contacto> contactos = new ArrayList<>();
     private  HashMap<Miembro, Area> solicitudes = new HashMap<Miembro, Area>();
+
+    private CalculadoraHC calculadoraHC = new CalculadoraHC();
 
     public Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, TipoClasificacion tipoClasificacion, Espacio espacio) {
         this.razonSocial = razonSocial;
@@ -87,7 +92,11 @@ public class Organizacion {
     }
 
     public double calcularHC(){
-        return 0;
+        try {
+            return calculadoraHC.calcularHCOrganizacion(this.getTrayectosOrganizacion(), this.mediciones, 20.0); //preguntar lo del K
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Boolean estaEnLaProvincia(String provincia){
@@ -98,6 +107,10 @@ public class Organizacion {
         return espacio.getMunicipio().equals(municipio);
     }
 
-
-
+    public List<Trayecto> getTrayectosOrganizacion(){
+        return areas.stream().flatMap(area -> area.getTrayectosMiembrosArea().stream()).collect(Collectors.toList());
+    }
+    public Ubicacion getUbicacion(){
+        return this.espacio;
+    }
 }

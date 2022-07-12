@@ -69,17 +69,15 @@ public class DistanciaApiCalls {
     private int obtenerIdLocalidad(Ubicacion ubicacion) throws Exception {
         clientUsers.replacePath("/paises");
         int paisId = busquedaIdGenerico(ubicacion.getPais());
-        System.out.println(paisId);
 
         clientUsers.replacePath("/provincias")
                    .replaceQueryParam("paisId", paisId);
         int provinciaId = busquedaIdGenerico(ubicacion.getProvincia());
-        System.out.println(provinciaId);
 
         clientUsers.replacePath("/municipios")
                    .replaceQueryParam("provinciaId", provinciaId);
         int municipioId = busquedaIdGenerico(ubicacion.getMunicipio());
-        System.out.println(municipioId);
+
         clientUsers.replacePath("/localidades")
                    .replaceQueryParam("municipioId", municipioId);
         return busquedaIdGenerico(ubicacion.getLocalidad());
@@ -99,6 +97,6 @@ public class DistanciaApiCalls {
                 if (datosUbicacion[i].getNombre().equals(nombre)) return datosUbicacion[i].getId();
             offset++;
         }
-        throw new Exception("No se encontro el pais");
+        throw new Exception("No se encontro el dato");
     }
 }

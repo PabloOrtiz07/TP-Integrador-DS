@@ -21,14 +21,23 @@ public class RepositorioOrganizaciones {
     //Agrego en el constructor que se inicializen unas organizaciones default;
     private RepositorioOrganizaciones(){
         try {
-            Espacio unEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "CIUDAD DE BUENOS AIRES", "RETIRO", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
-            Organizacion google = new Organizacion("Google", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, unEspacio);
+            Espacio unEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "RETIRO", "CIUDAD DE BUENOS AIRES", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
+            Organizacion google = new Organizacion("google", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, unEspacio);
             google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111"));
             Area marketing = new Area("marketing");
             google.agregarArea(marketing);
             marketing.agregarMiembro(new Miembro(new Persona("Nombre", "Apellido", "123", TipoDocumento.DNI)));
             marketing.agregarMiembro(new Miembro(new Persona("OtroNombre", "OtroApellido", "456", TipoDocumento.DNI)));
             organizaciones.add(google);
+
+            Espacio otroEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "CIUDAD DE BUENOS AIRES", "RETIRO", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
+            Organizacion utn = new Organizacion("utn", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, otroEspacio);
+            google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111"));
+            Area sistemas = new Area("marketing");
+            utn.agregarArea(sistemas);
+            marketing.agregarMiembro(new Miembro(new Persona("Nombre", "Apellido", "123", TipoDocumento.DNI)));
+            marketing.agregarMiembro(new Miembro(new Persona("OtroNombre", "OtroApellido", "456", TipoDocumento.DNI)));
+            organizaciones.add(utn);
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }

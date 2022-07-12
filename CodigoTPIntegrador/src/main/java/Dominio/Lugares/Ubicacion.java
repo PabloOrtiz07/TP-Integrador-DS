@@ -64,4 +64,13 @@ public abstract class Ubicacion {
    public void setAltura(String altura) {
       this.altura = altura;
    }
+
+   public boolean equals(Ubicacion that){
+      return this.pais.equals(that.pais)
+              && this.provincia.equals(that.provincia)
+              && this.localidad.equals(that.localidad)
+              && this.municipio.equals(that.municipio)
+              && this.calle.equals(that.calle)
+              && this.altura.equals(that.altura);
+   }
 }

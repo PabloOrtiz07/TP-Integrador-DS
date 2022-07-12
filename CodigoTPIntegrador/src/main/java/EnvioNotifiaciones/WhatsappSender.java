@@ -2,7 +2,7 @@ package EnvioNotifiaciones;
 
 public class WhatsappSender {
 
-    public void enviar(String numerosTelefono) {
+    public void send(String numerosTelefono, String mensaje) {
     //TODO
     }
 }
