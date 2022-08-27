@@ -10,17 +10,20 @@ public class LecturaFactor {
 
     public LecturaFactor() {
     }
-    public void leerFactorK(){
+
+    public Double leerFactorK() {
         try {
 
             InputStream inputStream = new FileInputStream("src/main/resources/configuracionConstante.properties");
 
             Properties properties = new Properties();
             properties.load(inputStream);
-            System.out.println(properties.getProperty("constanteK"));
-
+            Double valorDeLaConstante = Double.valueOf(properties.getProperty("constanteK"));
+            return valorDeLaConstante;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

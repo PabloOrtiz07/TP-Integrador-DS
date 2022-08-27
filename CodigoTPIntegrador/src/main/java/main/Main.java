@@ -23,8 +23,6 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) throws Exception {
-        LecturaFactor lecturaFactor = new LecturaFactor();
-        lecturaFactor.leerFactorK();
         Scheduler scheduler = new Scheduler();
         scheduler.comenzar();
         Scanner entrada = new Scanner(System.in);

@@ -93,7 +93,7 @@ public class Organizacion {
 
     public double calcularHC(){
         try {
-            return calculadoraHC.calcularHCOrganizacion(this.getTrayectosOrganizacion(), this.mediciones, 20.0); //preguntar lo del K
+            return calculadoraHC.calcularHCOrganizacion(this.getTrayectosOrganizacion(), this.mediciones); //preguntar lo del K
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
