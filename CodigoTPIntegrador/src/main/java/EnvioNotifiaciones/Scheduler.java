@@ -12,6 +12,7 @@ import org.quartz.TriggerBuilder;
 
 public class Scheduler {
 
+
     public void comenzar() throws SchedulerException{
 
         // Creacion del scheduler
@@ -36,4 +37,7 @@ public class Scheduler {
         scheduler.start();
     }
 
+
+    public Scheduler() {
+    }
 }

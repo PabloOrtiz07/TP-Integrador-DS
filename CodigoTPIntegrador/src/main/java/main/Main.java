@@ -9,9 +9,11 @@ import Dominio.Transportes.*;
 import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
 import EnvioNotifiaciones.Scheduler;
+import LectoresArchivo.LecturaFactor;
 import Seguridad.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
+
 
 
 import java.io.*;
@@ -21,6 +23,8 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) throws Exception {
+        LecturaFactor lecturaFactor = new LecturaFactor();
+        lecturaFactor.leerFactorK();
         Scheduler scheduler = new Scheduler();
         scheduler.comenzar();
         Scanner entrada = new Scanner(System.in);
@@ -258,6 +262,7 @@ public class Main {
         return new Miembro(persona);
     }
 
-
 }
+
+
 

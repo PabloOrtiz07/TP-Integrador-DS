@@ -113,4 +113,6 @@ public class Organizacion {
     public Ubicacion getUbicacion(){
         return this.espacio;
     }
+
+
 }

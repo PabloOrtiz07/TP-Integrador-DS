@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeerExcel {
+
     public List<Medicion> cargaDatosDeActividad(String path){
         List<Medicion> mediciones = new ArrayList<>();
-        /*
+/*
         try{
             FileReader fileReader = new FileReader(path);
 
@@ -39,7 +40,9 @@ public class LeerExcel {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        */
+ */
         return mediciones;
+
     }
+
 }

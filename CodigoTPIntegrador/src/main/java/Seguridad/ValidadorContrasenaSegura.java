@@ -17,6 +17,9 @@ import LectoresArchivo.LectorArchivoTXT;
 
 public class ValidadorContrasenaSegura {
 
+    public ValidadorContrasenaSegura() {
+    }
+
     public static int minimoCaracteres() {
         return MINIMO_CARACTERES;
     }

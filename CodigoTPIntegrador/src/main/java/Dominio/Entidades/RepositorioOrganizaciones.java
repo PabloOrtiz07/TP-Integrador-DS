@@ -18,12 +18,15 @@ public class RepositorioOrganizaciones {
     private List<Organizacion> organizaciones = new ArrayList<>();
 
 
+
     //Agrego en el constructor que se inicializen unas organizaciones default;
     private RepositorioOrganizaciones(){
         try {
             Espacio unEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "RETIRO", "CIUDAD DE BUENOS AIRES", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
             Organizacion google = new Organizacion("google", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, unEspacio);
-            google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111"));
+            google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111",true,true));
+            google.agregarContacto(new Contacto("soloPorEmail@maildrop.cc", "11111111",true,false));
+            google.agregarContacto(new Contacto("soloWhatsapp@maildrop.cc", "11111111",false,false));
             Area marketing = new Area("marketing");
             google.agregarArea(marketing);
             marketing.agregarMiembro(new Miembro(new Persona("Nombre", "Apellido", "123", TipoDocumento.DNI)));
@@ -32,7 +35,7 @@ public class RepositorioOrganizaciones {
 
             Espacio otroEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "CIUDAD DE BUENOS AIRES", "RETIRO", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
             Organizacion utn = new Organizacion("utn", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, otroEspacio);
-            google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111"));
+            google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111",true,true));
             Area sistemas = new Area("marketing");
             utn.agregarArea(sistemas);
             marketing.agregarMiembro(new Miembro(new Persona("Nombre", "Apellido", "123", TipoDocumento.DNI)));

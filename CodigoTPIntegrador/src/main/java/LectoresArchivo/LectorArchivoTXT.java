@@ -19,4 +19,6 @@ public class LectorArchivoTXT {
         return false;
     }
 
+    public LectorArchivoTXT() {
+    }
 }

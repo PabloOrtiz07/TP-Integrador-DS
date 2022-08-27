@@ -6,4 +6,6 @@ public class Espacio extends Ubicacion{
         super(pais,provincia,localidad,municipio,calle,altura);
         this.tipoEspacio = tipoEspacio;
     }
+
+
 }

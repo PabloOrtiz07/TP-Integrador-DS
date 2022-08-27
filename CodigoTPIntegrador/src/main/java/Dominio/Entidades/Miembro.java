@@ -15,6 +15,11 @@ public class Miembro {
     private List<Trayecto> trayectos = new ArrayList<>();
     private CalculadoraHC calculadoraHC = new CalculadoraHC();
 
+    private Boolean notificacionEmail;
+
+    private Boolean notificacionPorWhatssap;
+
+
     public List<Tramo> getTramos() {
         return tramos;
     }

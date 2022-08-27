@@ -24,8 +24,8 @@ public class JobEnvioNotificacionesImpl implements Job {
 
         RepositorioOrganizaciones repo = RepositorioOrganizaciones.getInstance();
         List<Contacto> contactos = repo.getOrganizaciones().stream().flatMap(organizacion -> organizacion.getContactos().stream()).collect(Collectors.toList());
-        String emailSeparadoPorComa = contactos.stream().map(contacto -> contacto.getEmail()).collect(Collectors.joining(","));
-        String telefonosSeparadosPorComa= contactos.stream().map(contacto -> contacto.getTelefono()).collect(Collectors.joining(","));
+        String emailSeparadoPorComa = contactos.stream().filter(contacto -> contacto.getNotificacionPorEmail()==true).map(contacto -> contacto.getEmail()).collect(Collectors.joining(","));
+        String telefonosSeparadosPorComa= contactos.stream().filter(contacto -> contacto.getNotificacionPorWhatsapp()==true).map(contacto -> contacto.getTelefono()).collect(Collectors.joining(","));
 
         EmailSender emailSender = new EmailSender();
         emailSender.send("dds2022grupo8@gmail.com", emailSeparadoPorComa, "Recomendaciones:", "LINK A LAS RECOMENDACIONES: https://www.frba.utn.edu.ar/");

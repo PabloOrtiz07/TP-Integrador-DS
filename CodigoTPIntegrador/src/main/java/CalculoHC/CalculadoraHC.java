@@ -6,6 +6,8 @@ import Dominio.Viajes.Trayecto;
 import java.util.List;
 
 public class CalculadoraHC {
+
+    private  Double k;
     private CalculadoraHCDatosActividad calculadoraHCDatosActividad;
     private CalculadoraHCTrayecto calculadoraHCTrayecto;
 

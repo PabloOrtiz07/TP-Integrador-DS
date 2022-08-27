@@ -73,4 +73,5 @@ public abstract class Ubicacion {
               && this.calle.equals(that.calle)
               && this.altura.equals(that.altura);
    }
+
 }
