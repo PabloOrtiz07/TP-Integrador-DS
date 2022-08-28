@@ -6,6 +6,10 @@ public class MedicionOtros extends Medicion {
     FactorEmision factorEmision;
     String unidad;
 
+    public MedicionOtros(String actividad) {
+        super();
+    }
+
     public String getTipoConsumo() {
         return tipoConsumo;
     }

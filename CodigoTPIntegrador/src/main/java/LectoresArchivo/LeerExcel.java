@@ -1,20 +1,28 @@
 package LectoresArchivo;
 
 import Dominio.Medicion.Medicion;
+import Dominio.Medicion.MedicionLogistica;
+import Dominio.Medicion.MedicionOtros;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
 import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class LeerExcel {
 
-    public List<Medicion> cargaDatosDeActividad(String path){
-        List<Medicion> mediciones = new ArrayList<>();
-/*
+
+    private List<DatoLeidoExcel> datosLeidoExcel = new ArrayList<>();
+
+    public void cargaDatosDeActividad(String path){
+
+
         try{
             FileReader fileReader = new FileReader(path);
 
@@ -27,22 +35,36 @@ public class LeerExcel {
 
             for (String[] row : da) {
 
-                Medicion medicion = new Medicion(
+                DatoLeidoExcel datoLeidoExcel = new DatoLeidoExcel(
                         row[0],
                         row[1],
                         Double.parseDouble(row[2]),
-                        row[3],
-                        row[4]
+                        LocalDate.parse(row[3]) // hay que ver como viene la fecha porque me acuerdo que aca habia bardo
                 );
-                mediciones.add(medicion);
+                this.datosLeidoExcel.add(datoLeidoExcel);
             }
 
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
- */
-        return mediciones;
+    }
 
+    public List<MedicionLogistica> cargarMedicionesLogistica(){
+      return datosLeidoExcel.stream().filter(datoLeidoExcel -> datoLeidoExcel.getActividad().equals("Logistica de Productos y Residuos")).map(datoLeidoExcel -> crearMedicionLogistica(datoLeidoExcel)).collect(Collectors.toList());
+    }
+
+    public MedicionLogistica crearMedicionLogistica(DatoLeidoExcel datoLeidoExcel){
+         MedicionLogistica medicionLogistica = new MedicionLogistica(datoLeidoExcel.getActividad()); // aca faltaria llenar con los demas datos pero no me doy cuenta
+         return  medicionLogistica;
+    }
+
+    public List<MedicionOtros> cargarMedicionesOtros(){
+        return datosLeidoExcel.stream().filter(datoLeidoExcel -> !datoLeidoExcel.getActividad().equals("Logistica de Productos y Residuos")).map(datoLeidoExcel -> crearMedicionOtro(datoLeidoExcel)).collect(Collectors.toList());
+    }
+
+    public MedicionOtros crearMedicionOtro(DatoLeidoExcel datoLeidoExcel){
+        MedicionOtros medicionOtros = new MedicionOtros(datoLeidoExcel.getActividad()); // aca faltaria llenar con los demas datos pero no me doy cuenta
+        return  medicionOtros;
     }
 
 }

@@ -5,6 +5,8 @@ import Dominio.Lugares.Ubicacion;
 import Dominio.Transportes.Transporte;
 import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,15 @@ public class Miembro {
     private List<Trayecto> trayectos = new ArrayList<>();
     private CalculadoraHC calculadoraHC = new CalculadoraHC();
 
-    private Boolean notificacionEmail;
+    public LocalDate getFechaDeIngreso() {
+        return fechaDeIngreso;
+    }
 
-    private Boolean notificacionPorWhatssap;
+    public void setFechaDeIngreso(LocalDate fechaDeIngreso) {
+        this.fechaDeIngreso = fechaDeIngreso;
+    }
+
+    private LocalDate fechaDeIngreso;
 
 
     public List<Tramo> getTramos() {

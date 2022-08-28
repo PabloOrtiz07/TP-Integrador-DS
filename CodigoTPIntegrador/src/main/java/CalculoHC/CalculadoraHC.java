@@ -1,6 +1,8 @@
 package CalculoHC;
 
 import Dominio.Medicion.Medicion;
+import Dominio.Medicion.MedicionLogistica;
+import Dominio.Medicion.MedicionOtros;
 import Dominio.Viajes.Trayecto;
 import LectoresArchivo.LecturaFactor;
 
@@ -28,10 +30,11 @@ public class CalculadoraHC {
 
     }
 
-    public double calcularHCOrganizacion(List<Trayecto> trayectos, List<Medicion> mediciones) throws Exception {
+    public double calcularHCOrganizacion(List<Trayecto> trayectos, List<MedicionLogistica> medicionesLogistica, List<MedicionOtros> medicionOtros) throws Exception {
         Double hcTrayectos = calculadoraHCTrayecto.calcularHCTrayectos(trayectos);
-        Double hcDatosActividad = calculadoraHCDatosActividad.calculoHCActividad(mediciones,getFactorK());
-        return hcTrayectos + hcDatosActividad;
+        Double hcDatosActividadLogistica = calculadoraHCDatosActividad.calculoHCActividadLogistica(medicionesLogistica,getFactorK());
+        Double hcDatosActividadOtros= calculadoraHCDatosActividad.calculoHCActividadOtros(medicionOtros,getFactorK());
+        return hcTrayectos + hcDatosActividadLogistica + hcDatosActividadOtros;
     }
 
     public double calcularHcTrayectos(List<Trayecto> trayectos) throws Exception {

@@ -8,6 +8,10 @@ public class MedicionLogistica extends Medicion{
     Double distanciaRecorrida;
     Double pesoTotal;
 
+    public MedicionLogistica(String actividad) {
+        super();
+    }
+
     public String getCategoriaProducto() {
         return categoriaProducto;
     }

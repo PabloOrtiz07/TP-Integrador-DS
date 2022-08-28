@@ -4,6 +4,8 @@ import CalculoHC.CalculadoraHC;
 import Dominio.Lugares.Espacio;
 import Dominio.Lugares.Ubicacion;
 import Dominio.Medicion.Medicion;
+import Dominio.Medicion.MedicionLogistica;
+import Dominio.Medicion.MedicionOtros;
 import Dominio.Viajes.Trayecto;
 import LectoresArchivo.LeerExcel;
 
@@ -19,7 +21,10 @@ public class Organizacion {
     private TipoClasificacion tipoClasificacion;
     private Espacio espacio;
     private List<Area> areas = new ArrayList<>();
-    private List<Medicion> mediciones = new ArrayList<>();
+
+    private List<MedicionLogistica> medicionesLogistica = new ArrayList<>();
+
+    private List<MedicionOtros> medicionesOtros = new ArrayList<>();
 
     private List<Contacto> contactos = new ArrayList<>();
     private  HashMap<Miembro, Area> solicitudes = new HashMap<Miembro, Area>();
@@ -47,9 +52,6 @@ public class Organizacion {
         return tipoClasificacion;
     }
 
-    public List<Medicion> getMediciones() {
-        return mediciones;
-    }
 
     public void agregarArea(Area area) throws Exception{
         if(areas.stream().anyMatch(area1 ->area1.getNombreArea().equals(area.getNombreArea())))
@@ -88,12 +90,14 @@ public class Organizacion {
 
     public void cargarMediciones(String path){
         LeerExcel leerExcel = new LeerExcel();
-        mediciones.addAll(leerExcel.cargaDatosDeActividad(path));
+        leerExcel.cargaDatosDeActividad(path);
+        medicionesLogistica.addAll(leerExcel.cargarMedicionesLogistica());
+        medicionesOtros.addAll(leerExcel.cargarMedicionesOtros());
     }
 
     public double calcularHC(){
         try {
-            return calculadoraHC.calcularHCOrganizacion(this.getTrayectosOrganizacion(), this.mediciones); //preguntar lo del K
+            return calculadoraHC.calcularHCOrganizacion(this.getTrayectosOrganizacion(), this.medicionesLogistica,this.medicionesOtros);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

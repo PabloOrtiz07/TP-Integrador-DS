@@ -17,6 +17,8 @@ import Seguridad.ValidadorContrasenaSegura;
 
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -194,6 +196,11 @@ public class Main {
 
         System.out.println("Solicitud de aceptacion aceptada");
         organizacion.aceptarSolicitud(miembro);
+
+        miembro.setFechaDeIngreso(LocalDate.now());
+
+        //Trayecto trayecto = cargarTrayecto(); faltaria cargar el trayecto
+
     }
 
     public static void altaTransportePublico(){
