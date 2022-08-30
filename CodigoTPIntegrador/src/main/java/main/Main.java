@@ -10,7 +10,9 @@ import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
 import EnvioNotifiaciones.Scheduler;
 import LectoresArchivo.LecturaFactor;
-import Seguridad.RepositorioUsuario;
+import Repositorios.RepoTransportePublico;
+import Repositorios.RepositorioOrganizaciones;
+import Repositorios.RepositorioUsuario;
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
 

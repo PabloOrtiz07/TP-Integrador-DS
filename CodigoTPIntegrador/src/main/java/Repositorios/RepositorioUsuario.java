@@ -1,8 +1,8 @@
-package Seguridad;
+package Repositorios;
 
 import Dominio.Entidades.Miembro;
 import Dominio.Entidades.Persona;
-import Dominio.Entidades.RepositorioOrganizaciones;
+import Seguridad.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

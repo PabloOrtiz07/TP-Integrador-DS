@@ -1,4 +1,4 @@
-package Dominio.Transportes;
+package Repositorios;
 
 import Dominio.Transportes.TransportePublico;
 import Seguridad.Usuario;

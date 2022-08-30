@@ -1,5 +1,5 @@
-package Dominio.Entidades;
-
+package Repositorios;
+import Dominio.Entidades.*;
 import Dominio.Lugares.Espacio;
 import Dominio.Lugares.TipoEspacio;
 

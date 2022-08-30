@@ -1,5 +1,6 @@
 package Dominio.Entidades;
 
+import Repositorios.RepositorioOrganizaciones;
 import java.util.stream.Collectors;
 
 public class SectorProvincial  extends SectorTerritorial{

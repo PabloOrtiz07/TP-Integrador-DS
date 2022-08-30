@@ -1,6 +1,4 @@
-package Dominio.Transportes;
-
-import Dominio.Transportes.TransportePrivado;
+package Repositorios;
 
 public class RepoTransportePrivado{
     private static RepoTransportePrivado repoTransportePrivado = null;

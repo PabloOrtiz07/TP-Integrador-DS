@@ -1,7 +1,7 @@
 package EnvioNotifiaciones;
 
 import Dominio.Entidades.Contacto;
-import Dominio.Entidades.RepositorioOrganizaciones;
+import Repositorios.RepositorioOrganizaciones;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
