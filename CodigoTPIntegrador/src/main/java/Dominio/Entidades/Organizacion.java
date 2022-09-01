@@ -31,11 +31,22 @@ public class Organizacion {
 
     private CalculadoraHC calculadoraHC = new CalculadoraHC();
 
-    public Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, TipoClasificacion tipoClasificacion, Espacio espacio) {
+    private Double diasHabilesPorSemana;
+
+    public Double getDiasHabilesPorSemana() {
+        return diasHabilesPorSemana;
+    }
+
+    public void setDiasHabilesPorSemana(Double diasHabilesPorSemana) {
+        this.diasHabilesPorSemana = diasHabilesPorSemana;
+    }
+
+    public Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, TipoClasificacion tipoClasificacion, Espacio espacio, Double diasHabilesPorSemana) {
         this.razonSocial = razonSocial;
         this.tipoOrganizacion = tipoOrganizacion;
         this.tipoClasificacion = tipoClasificacion;
         this.espacio = espacio;
+        this.diasHabilesPorSemana = diasHabilesPorSemana;
     }
 
     public String getRazonSocial() {

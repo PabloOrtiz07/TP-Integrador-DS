@@ -9,6 +9,27 @@ import java.util.List;
 public class Trayecto {
     private Ubicacion ubicacionInicio;
     private Ubicacion ubicacionFinal;
+
+    private Integer diasDeUsoEnLaSemana; // por pantalla porque no tenemos idea cuando se setea
+
+    public Integer getDiasDeUsoEnLaSemana() {
+        return diasDeUsoEnLaSemana;
+    }
+
+    public void setDiasDeUsoEnLaSemana(Integer diasDeUsoEnLaSemana) {
+        this.diasDeUsoEnLaSemana = diasDeUsoEnLaSemana;
+    }
+
+    private Double pesoTrayecto;
+
+    public Double getPesoTrayecto() {
+        return pesoTrayecto;
+    }
+
+    public void setPesoTrayecto(Double pesoTrayecto,Integer diasHabiles) {
+        this.pesoTrayecto = calcularPesoTrayecto(diasHabiles);
+    }
+
     private List<Tramo> tramosTrayecto = new ArrayList<>();
 
     public Trayecto(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal){
@@ -58,4 +79,9 @@ public class Trayecto {
            }
        }).sum();
     }
+
+    public double calcularPesoTrayecto(Integer diasHabiles){
+        return this.diasDeUsoEnLaSemana/diasHabiles;
+    }
+
 }

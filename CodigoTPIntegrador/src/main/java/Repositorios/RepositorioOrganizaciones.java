@@ -23,7 +23,7 @@ public class RepositorioOrganizaciones {
     private RepositorioOrganizaciones(){
         try {
             Espacio unEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "RETIRO", "CIUDAD DE BUENOS AIRES", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
-            Organizacion google = new Organizacion("google", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, unEspacio);
+            Organizacion google = new Organizacion("google", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, unEspacio,5.00);
             google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111",true,true));
             google.agregarContacto(new Contacto("soloPorEmail@maildrop.cc", "11111111",true,false));
             google.agregarContacto(new Contacto("soloWhatsapp@maildrop.cc", "11111111",false,false));
@@ -34,7 +34,7 @@ public class RepositorioOrganizaciones {
             organizaciones.add(google);
 
             Espacio otroEspacio = new Espacio("ARGENTINA", "CIUDAD DE BUENOS AIRES", "CIUDAD DE BUENOS AIRES", "RETIRO", "AV. 9 DE JULIO", "100", TipoEspacio.TRABAJO);
-            Organizacion utn = new Organizacion("utn", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, otroEspacio);
+            Organizacion utn = new Organizacion("utn", TipoOrganizacion.EMPRESA, TipoClasificacion.EMPRESA_DEL_SECTOR_SECUNDARIO, otroEspacio,4.00);
             google.agregarContacto(new Contacto("pruebadds@maildrop.cc", "11111111",true,true));
             Area sistemas = new Area("marketing");
             utn.agregarArea(sistemas);

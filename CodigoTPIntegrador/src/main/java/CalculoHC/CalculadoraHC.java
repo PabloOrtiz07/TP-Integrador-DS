@@ -37,8 +37,12 @@ public class CalculadoraHC {
         return hcTrayectos + hcDatosActividadLogistica + hcDatosActividadOtros;
     }
 
-    public double calcularHcTrayectos(List<Trayecto> trayectos) throws Exception {
+    public double calcularHcTrayectos(List<Trayecto> trayectos) throws Exception { // mirar esto
         return calculadoraHCTrayecto.calcularHCTrayectos(trayectos);
+    }
+
+    public double calcularHcTrayectosPersonal(List<Trayecto> trayectos) throws Exception {
+        return calculadoraHCTrayecto.calcularHCTrayectoPorMes(trayectos);
     }
 
 }

@@ -67,9 +67,9 @@ public class Tramo {
        return this.medioTransporte.distanciaRecorrida(this.ubicacionInicio, this.ubicacionFinal);
     }
 
-    public double HcTramo(){
+    public double calcularHCTramo(){
         try {
-            return this.distanciaTramo() * this.medioTransporte.getFactorEmision();
+            return (this.distanciaTramo() * this.medioTransporte.getFactorEmision())/miembrosTramo.size();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

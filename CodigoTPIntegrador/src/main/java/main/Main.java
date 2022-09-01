@@ -153,11 +153,11 @@ public class Main {
         TipoOrganizacion tipoOrganizacion = TipoOrganizacion.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
         System.out.println("Ingresa el tipo de clasificacion");
         TipoClasificacion tipoClasificacion = TipoClasificacion.valueOf(entrada.nextLine().toUpperCase().replace(' ', '_'));
-
         String[] datosUbicacion = cargarDatosUbicacion();
-
+        System.out.println("Ingresa los dias habiles por semana de la organizacion");
+        Double diasHabilesIngresado = entrada.nextDouble();
         Espacio espacioOrg = new Espacio(datosUbicacion[0],datosUbicacion[1],datosUbicacion[2],datosUbicacion[3],datosUbicacion[4],datosUbicacion[5], TipoEspacio.TRABAJO);
-        Organizacion organizacion = new Organizacion(razonSocial,tipoOrganizacion,tipoClasificacion, espacioOrg);
+        Organizacion organizacion = new Organizacion(razonSocial,tipoOrganizacion,tipoClasificacion, espacioOrg,diasHabilesIngresado);
 
         System.out.println("Agregue las areas de la organizacion");
         do{
@@ -268,6 +268,9 @@ public class Main {
         Persona persona = new Persona(nombre, apellido, numeroDocumento, tipoDocumento);
         return new Miembro(persona);
     }
+
+
+
 
 }
 

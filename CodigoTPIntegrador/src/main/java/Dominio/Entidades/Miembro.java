@@ -91,7 +91,7 @@ public class Miembro {
     }
 
     public double calcularHCPersonal() throws Exception {
-        return calculadoraHC.calcularHcTrayectos(this.trayectos);
+        return calculadoraHC.calcularHcTrayectosPersonal(this.trayectos);
     }
 
     public double impactoMiembroEnHCOrg() throws Exception {
