@@ -2,14 +2,16 @@ package Dominio.Medicion;
 
 import Dominio.Transportes.Transporte;
 
+import java.time.LocalDate;
+
 public class MedicionLogistica extends Medicion{
     String categoriaProducto;
     TransporteLogistico medioTransporte;
     Double distanciaRecorrida;
     Double pesoTotal;
 
-    public MedicionLogistica(String actividad) {
-        super();
+    public MedicionLogistica(String actividad, LocalDate periodicidad, String periodo) {
+        super(actividad, periodicidad, periodo);
     }
 
     public String getCategoriaProducto() {

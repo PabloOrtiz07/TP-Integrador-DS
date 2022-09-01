@@ -5,10 +5,12 @@ import Apis.dto.DistanciaResponse;
 import Dominio.Entidades.*;
 import Dominio.Lugares.*;
 
+import Dominio.Medicion.MedicionOtros;
 import Dominio.Transportes.*;
 import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
 import EnvioNotifiaciones.Scheduler;
+import LectoresArchivo.DatoLeidoExcel;
 import LectoresArchivo.LecturaFactor;
 import LectoresArchivo.LeerExcel;
 import Repositorios.RepoTransportePublico;
@@ -20,6 +22,7 @@ import Seguridad.ValidadorContrasenaSegura;
 
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -28,8 +31,8 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) throws Exception {
-        Scheduler scheduler = new Scheduler();
-        scheduler.comenzar();
+        //Scheduler scheduler = new Scheduler();
+        //scheduler.comenzar();
         Scanner entrada = new Scanner(System.in);
         int seleccion;
         do{
@@ -278,9 +281,17 @@ public class Main {
         Scanner entrada = new Scanner(System.in);
         String path = "src/main/resources/configuracionConstante.properties";
         LeerExcel leerExcel = new LeerExcel();
-        
+        leerExcel.cargaDatosDeActividad(path);
+        List <MedicionOtros> medicionOtros = leerExcel.cargarMedicionesOtros();
+        medicionOtros.stream().forEach(medicionOtros1 -> mostrar(medicionOtros1));
+
     }
 
+    private static void mostrar(MedicionOtros medicionOtros){
+        System.out.println(medicionOtros.getActividad());
+        System.out.println(medicionOtros.getTipoConsumo());
+        System.out.println(medicionOtros.getValor());
+    }
 }
 
 

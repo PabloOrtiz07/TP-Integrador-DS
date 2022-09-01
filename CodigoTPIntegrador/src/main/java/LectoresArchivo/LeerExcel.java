@@ -51,20 +51,20 @@ public class LeerExcel {
     }
 
     public List<MedicionLogistica> cargarMedicionesLogistica(){
-      return datosLeidoExcel.stream().filter(datoLeidoExcel -> datoLeidoExcel.getActividad().equals("Logistica de Productos y Residuos")).map(datoLeidoExcel -> crearMedicionLogistica(datoLeidoExcel)).collect(Collectors.toList());
+      return datosLeidoExcel.stream().filter(datoLeidoExcel -> datoLeidoExcel.getActividad().equals("Logistica de productos y residuos")).map(datoLeidoExcel -> crearMedicionLogistica(datoLeidoExcel)).collect(Collectors.toList());
     }
 
     public MedicionLogistica crearMedicionLogistica(DatoLeidoExcel datoLeidoExcel){
-         MedicionLogistica medicionLogistica = new MedicionLogistica(datoLeidoExcel.getActividad()); // aca faltaria llenar con los demas datos pero no me doy cuenta
+         MedicionLogistica medicionLogistica = new MedicionLogistica(datoLeidoExcel.getActividad(),datoLeidoExcel.getPeriodoDeImputacion(),datoLeidoExcel.getPerioicidad()); // aca faltaria llenar con los demas datos pero no me doy cuenta
          return  medicionLogistica;
     }
 
     public List<MedicionOtros> cargarMedicionesOtros(){
-        return datosLeidoExcel.stream().filter(datoLeidoExcel -> !datoLeidoExcel.getActividad().equals("Logistica de Productos y Residuos")).map(datoLeidoExcel -> crearMedicionOtro(datoLeidoExcel)).collect(Collectors.toList());
+        return datosLeidoExcel.stream().filter(datoLeidoExcel -> !datoLeidoExcel.getActividad().equals("Logistica de productos y residuos")).map(datoLeidoExcel -> crearMedicionOtro(datoLeidoExcel)).collect(Collectors.toList());
     }
 
     public MedicionOtros crearMedicionOtro(DatoLeidoExcel datoLeidoExcel){
-        MedicionOtros medicionOtros = new MedicionOtros(datoLeidoExcel.getActividad()); // aca faltaria llenar con los demas datos pero no me doy cuenta
+        MedicionOtros medicionOtros = new MedicionOtros(datoLeidoExcel.getActividad(),datoLeidoExcel.getPeriodoDeImputacion(),datoLeidoExcel.getPerioicidad(),datoLeidoExcel.getTipoDeConsumo(),datoLeidoExcel.getConsumo()); // aca faltaria llenar con los demas datos pero no me doy cuenta
         return  medicionOtros;
     }
 

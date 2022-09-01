@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public abstract class Medicion {
     private String actividad;
-    private String periodicidad;
+    private LocalDate periodoDeImputacion;
     private String periodo;
 
     public String getActividad() {
@@ -14,12 +14,12 @@ public abstract class Medicion {
     public void setActividad(String actividad) {
         this.actividad = actividad;
     }
-    public String getPeriodicidad() {
-        return periodicidad;
+    public LocalDate getPeriodicidad() {
+        return periodoDeImputacion;
     }
 
-    public void setPeriodicidad(String periodicidad) {
-        this.periodicidad = periodicidad;
+    public void setPeriodicidad(LocalDate periodicidad) {
+        this.periodoDeImputacion = periodicidad;
     }
 
     public String getPeriodo() {
@@ -27,6 +27,12 @@ public abstract class Medicion {
     }
 
     public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public Medicion(String actividad, LocalDate periodicidad, String periodo) {
+        this.actividad = actividad;
+        this.periodoDeImputacion = periodicidad;
         this.periodo = periodo;
     }
 

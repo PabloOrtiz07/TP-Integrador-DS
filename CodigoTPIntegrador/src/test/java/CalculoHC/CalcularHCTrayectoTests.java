@@ -36,7 +36,7 @@ public class CalcularHCTrayectoTests {
         trayecto.setTramosTrayecto(tramos);
 
         CalculadoraHCTrayecto calculadoraHCTrayecto = new CalculadoraHCTrayecto();
-        double resultado = calculadoraHCTrayecto.calcularHCTrayectos(trayectos);
+        double resultado = calculadoraHCTrayecto.calcularHCTrayectoPorMes(trayectos);
         Assertions.assertEquals(0,resultado); // tiene sentido que de 0
 
     }

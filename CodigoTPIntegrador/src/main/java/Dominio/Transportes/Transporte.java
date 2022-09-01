@@ -19,10 +19,5 @@ public abstract class Transporte {
         this.factorEmision = factorEmision;
     }
 
-/* public double distanciaRecorrida(Ubicacion ubicaionOrigen, Ubicacion ubicacionFinal) throws Exception{
-        return calculoDistanciaStrategy.calcularDistancia(ubicaionOrigen, ubicacionFinal);
-    }*/ // estaba mal
-
-
 
 }

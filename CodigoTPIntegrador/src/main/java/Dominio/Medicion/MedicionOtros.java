@@ -1,13 +1,26 @@
 package Dominio.Medicion;
 
+import java.time.LocalDate;
+
 public class MedicionOtros extends Medicion {
     String tipoConsumo;
     Double valor;
-    FactorEmision factorEmision;
     String unidad;
 
-    public MedicionOtros(String actividad) {
-        super();
+    FactorEmision factorEmision;
+
+    public FactorEmision getFactorEmision() {
+        return factorEmision;
+    }
+
+    public void setFactorEmision(FactorEmision factorEmision) {
+        this.factorEmision = factorEmision;
+    }
+
+    public MedicionOtros(String actividad, LocalDate periodicidad, String periodo, String tipoConsumo, Double valor) {
+        super(actividad, periodicidad, periodo);
+        this.tipoConsumo = tipoConsumo;
+        this.valor = valor;
     }
 
     public String getTipoConsumo() {
