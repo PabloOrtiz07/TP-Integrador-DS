@@ -78,7 +78,7 @@ public class Tramo {
 
     public double calcularHCTramo(){
         try {
-            return (this.getDistanciaTramo() * this.medioTransporte.getFactorEmision())/miembrosTramo.size();
+            return (this.getDistanciaTramo() * this.medioTransporte.getFactorEmision().getValor())/miembrosTramo.size();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

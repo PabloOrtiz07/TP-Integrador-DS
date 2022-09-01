@@ -10,6 +10,7 @@ import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
 import EnvioNotifiaciones.Scheduler;
 import LectoresArchivo.LecturaFactor;
+import LectoresArchivo.LeerExcel;
 import Repositorios.RepoTransportePublico;
 import Repositorios.RepositorioOrganizaciones;
 import Repositorios.RepositorioUsuario;
@@ -54,6 +55,9 @@ public class Main {
                     break;
                 case 5:
                     vincularMiembroConOrganizacion();
+                    break;
+                case 6:
+                    hacemosPruebaLectura();
                     break;
                 default:
                     System.out.println("Operacion invalida");
@@ -270,7 +274,12 @@ public class Main {
     }
 
 
-
+    private static void hacemosPruebaLectura(){
+        Scanner entrada = new Scanner(System.in);
+        String path = "src/main/resources/configuracionConstante.properties";
+        LeerExcel leerExcel = new LeerExcel();
+        
+    }
 
 }
 

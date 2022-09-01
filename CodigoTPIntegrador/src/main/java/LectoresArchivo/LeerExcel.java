@@ -39,7 +39,8 @@ public class LeerExcel {
                         row[0],
                         row[1],
                         Double.parseDouble(row[2]),
-                        LocalDate.parse(row[3]) // hay que ver como viene la fecha porque me acuerdo que aca habia bardo
+                        row[3],
+                        LocalDate.parse(row[4]) // hay que ver como viene la fecha porque me acuerdo que aca habia bardo
                 );
                 this.datosLeidoExcel.add(datoLeidoExcel);
             }
