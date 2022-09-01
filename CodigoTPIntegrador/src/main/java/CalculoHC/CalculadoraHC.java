@@ -8,8 +8,10 @@ import Dominio.Viajes.Trayecto;
 import Dominio.Entidades.Organizacion;
 import LectoresArchivo.LecturaFactor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CalculadoraHC {
 
@@ -44,9 +46,24 @@ public class CalculadoraHC {
         return calculadoraHCTrayecto.calcularHCTrayectoPorMes(trayectos);
     }
 
-    public double calcularHcTrayectosOrganizacion(Organizacion organizacion){
+  /*  public double calcularHcTrayectosOrganizacion(Organizacion organizacion){
         organizacion.getAreas().stream().map(area -> miembros = area.getMiembrosArea());
         return miembros.stream().map(miembro -> miembro.calcularHCPersonal()).sum();
+    }*/
+
+
+    public double calcularHcTrayectosOrganizacion(Organizacion organizacion){
+        List<Miembro> miembros = new ArrayList<>();
+        miembros.addAll(organizacion.getAreas().stream().flatMap(area -> area.getMiembrosArea().stream()).collect(Collectors.toList()));
+        return miembros.stream().mapToDouble(miembro -> {
+            try {
+                return miembro.calcularHCPersonal();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).sum();
     }
+
+
 
 }

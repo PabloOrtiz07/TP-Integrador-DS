@@ -8,21 +8,30 @@ import Dominio.Transportes.Transporte;
 import java.util.*;
 
 public class Tramo {
-
-    public Tramo(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Transporte medioTransporte, List<Miembro> miembros) {
+    protected  CalculoDistanciaStrategy calculoDistanciaStrategy;
+    public Tramo(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Transporte medioTransporte, List<Miembro> miembros) throws Exception {
         if(!medioTransporte.puedeCompartirse() && miembros.size()>1) throw new RuntimeException("El medio de transporte de este tramo no puede ser compartido");
 
         this.ubicacionInicio = ubicacionInicio;
         this.ubicacionFinal = ubicacionFinal;
         this.medioTransporte = medioTransporte;
         this.miembrosTramo = miembros;
+        this.distanciaTramo=this.calcularDistanciaTramo(ubicacionInicio,ubicacionFinal);
     }
+
+
     private List<Miembro> miembrosTramo = new ArrayList<>();
     private Ubicacion ubicacionInicio;
     private Ubicacion ubicacionFinal;
     private Trayecto trayecto;
     private Transporte medioTransporte;
-    
+
+    private Double distanciaTramo;
+
+    public Double getDistanciaTramo() {
+        return distanciaTramo;
+    }
+
     public List<Miembro> getMiembrosTramo() {
         return miembrosTramo;
     }
@@ -63,13 +72,13 @@ public class Tramo {
         this.medioTransporte = medioTransporte;
     }
 
-    public double distanciaTramo()throws Exception{
-       return this.medioTransporte.distanciaRecorrida(this.ubicacionInicio, this.ubicacionFinal);
+    public double calcularDistanciaTramo(Ubicacion ubicacionOrigen, Ubicacion ubicacionFinal) throws Exception{
+        return calculoDistanciaStrategy.calcularDistancia(ubicacionOrigen, ubicacionFinal);
     }
 
     public double calcularHCTramo(){
         try {
-            return (this.distanciaTramo() * this.medioTransporte.getFactorEmision())/miembrosTramo.size();
+            return (this.getDistanciaTramo() * this.medioTransporte.getFactorEmision())/miembrosTramo.size();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

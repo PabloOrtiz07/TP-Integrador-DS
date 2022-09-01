@@ -108,7 +108,7 @@ public class Organizacion {
 
     public double calcularHC(){
         try {
-            return calculadoraHC.calcularHCOrganizacion(this.getTrayectosOrganizacion(), this.medicionesLogistica,this.medicionesOtros);
+           return calculadoraHC.calcularHCOrganizacion(this, this.medicionesLogistica,this.medicionesOtros);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -19,9 +19,9 @@ public abstract class Transporte {
     }
 
 
-    public double distanciaRecorrida(Ubicacion ubicaionOrigen, Ubicacion ubicacionFinal) throws Exception{
+   /* public double distanciaRecorrida(Ubicacion ubicaionOrigen, Ubicacion ubicacionFinal) throws Exception{
         return calculoDistanciaStrategy.calcularDistancia(ubicaionOrigen, ubicacionFinal);
-    }
+    }*/ // estaba mal
 
 
 

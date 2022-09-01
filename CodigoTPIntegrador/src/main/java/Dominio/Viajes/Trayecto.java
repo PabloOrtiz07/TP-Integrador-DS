@@ -70,15 +70,6 @@ public class Trayecto {
         tramosTrayecto.add(tramo);
     }
 
-    public double distanciaTotal() throws Exception{
-       return tramosTrayecto.stream().mapToDouble(trayecto -> {
-           try {
-               return trayecto.distanciaTramo();
-           } catch (Exception e) {
-               throw new RuntimeException(e);
-           }
-       }).sum();
-    }
 
     public double calcularPesoTrayecto(Integer diasHabiles){
         return this.diasDeUsoEnLaSemana/diasHabiles;
