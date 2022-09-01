@@ -34,14 +34,12 @@ public class LeerExcel {
             List<String[]> da = csvReader.readAll();
 
             for (String[] row : da) {
-
                 DatoLeidoExcel datoLeidoExcel = new DatoLeidoExcel(
                         row[0],
                         row[1],
                         Double.parseDouble(row[2]),
                         row[3],
-                        LocalDate.parse(row[4]) // hay que ver como viene la fecha porque me acuerdo que aca habia bardo
-                );
+                        row[4]);
                 this.datosLeidoExcel.add(datoLeidoExcel);
             }
 

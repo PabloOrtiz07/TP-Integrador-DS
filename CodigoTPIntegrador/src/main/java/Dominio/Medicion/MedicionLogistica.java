@@ -10,7 +10,7 @@ public class MedicionLogistica extends Medicion{
     Double distanciaRecorrida;
     Double pesoTotal;
 
-    public MedicionLogistica(String actividad, LocalDate periodicidad, String periodo) {
+    public MedicionLogistica(String actividad, String periodicidad, String periodo) {
         super(actividad, periodicidad, periodo);
     }
 

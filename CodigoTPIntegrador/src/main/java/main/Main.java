@@ -5,6 +5,7 @@ import Apis.dto.DistanciaResponse;
 import Dominio.Entidades.*;
 import Dominio.Lugares.*;
 
+import Dominio.Medicion.MedicionLogistica;
 import Dominio.Medicion.MedicionOtros;
 import Dominio.Transportes.*;
 import Dominio.Viajes.Tramo;
@@ -58,9 +59,6 @@ public class Main {
                     break;
                 case 5:
                     vincularMiembroConOrganizacion();
-                    break;
-                case 6:
-                    hacemosPruebaLectura();
                     break;
                 default:
                     System.out.println("Operacion invalida");
@@ -277,21 +275,6 @@ public class Main {
     }
 
 
-    private static void hacemosPruebaLectura(){
-        Scanner entrada = new Scanner(System.in);
-        String path = "src/main/resources/configuracionConstante.properties";
-        LeerExcel leerExcel = new LeerExcel();
-        leerExcel.cargaDatosDeActividad(path);
-        List <MedicionOtros> medicionOtros = leerExcel.cargarMedicionesOtros();
-        medicionOtros.stream().forEach(medicionOtros1 -> mostrar(medicionOtros1));
-
-    }
-
-    private static void mostrar(MedicionOtros medicionOtros){
-        System.out.println(medicionOtros.getActividad());
-        System.out.println(medicionOtros.getTipoConsumo());
-        System.out.println(medicionOtros.getValor());
-    }
 }
 
 
