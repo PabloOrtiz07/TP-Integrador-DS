@@ -1,6 +1,6 @@
 package Dominio.Lugares;
 
-public abstract class Ubicacion {
+public class Ubicacion {
    protected String pais;
    protected String provincia;
    protected String localidad;
