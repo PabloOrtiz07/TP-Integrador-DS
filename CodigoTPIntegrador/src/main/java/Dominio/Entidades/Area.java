@@ -59,7 +59,7 @@ public class Area {
     }
     public double promedioHCPorMiembroArea(){
         try {
-            return calculadoraHc.calcularHcTrayectos(this.getTrayectosMiembrosArea()) / (double) this.miembrosArea.size() ;
+            return calculadoraHc.calcularHcTrayectosPersonal(this.getTrayectosMiembrosArea()) / (double) this.miembrosArea.size() ;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
