@@ -75,7 +75,7 @@ public class Tramo {
     public void setMedioTransporte(Transporte medioTransporte) {
         this.medioTransporte = medioTransporte;
     }
-    
+
 
     public double calcularDistanciaTramo(Ubicacion ubicacionOrigen, Ubicacion ubicacionFinal) throws Exception{
 

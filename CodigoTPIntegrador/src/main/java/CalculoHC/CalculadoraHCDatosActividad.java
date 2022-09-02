@@ -42,7 +42,7 @@ public class CalculadoraHCDatosActividad {
         return medicionesLogistica.stream().filter(medicionLogistica->medicionLogistica.getPeriodicidad().equals("mensual")).collect(Collectors.toList());
     }
     public double calculoHCActividadLogistica(List<MedicionLogistica>  medicionesLogistica, Double k){
-        return medicionesLogistica.stream().mapToDouble(medicionLogistica->medicionLogistica.getDistanciaRecorrida()* medicionLogistica.getPesoTotal()*medicionLogistica.getFactorEmision().getValor()*k).sum();
+        return medicionesLogistica.stream().mapToDouble(medicionLogistica->medicionLogistica.getDistanciaRecorrida()* medicionLogistica.getPesoTotal()*medicionLogistica.getMedioTransporte().getFactorEmision().getValor()*k).sum();
     }
 
 }

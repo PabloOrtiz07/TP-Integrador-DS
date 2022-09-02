@@ -32,8 +32,8 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) throws Exception {
-        //Scheduler scheduler = new Scheduler();
-        //scheduler.comenzar();
+        Scheduler scheduler = new Scheduler();
+        scheduler.comenzar();
         Scanner entrada = new Scanner(System.in);
         int seleccion;
         do{
