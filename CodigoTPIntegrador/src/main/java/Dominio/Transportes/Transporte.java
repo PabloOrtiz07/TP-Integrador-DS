@@ -19,5 +19,11 @@ public abstract class Transporte {
         this.factorEmision = factorEmision;
     }
 
+    public CalculoDistanciaStrategy getCalculoDistanciaStrategy() {
+        return calculoDistanciaStrategy;
+    }
 
+    public void setCalculoDistanciaStrategy(CalculoDistanciaStrategy calculoDistanciaStrategy) {
+        this.calculoDistanciaStrategy = calculoDistanciaStrategy;
+    }
 }

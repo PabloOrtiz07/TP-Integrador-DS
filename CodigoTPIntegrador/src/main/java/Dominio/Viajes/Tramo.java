@@ -19,6 +19,7 @@ public class Tramo {
         this.ubicacionFinal = ubicacionFinal;
         this.medioTransporte = medioTransporte;
         this.miembrosTramo = miembros;
+        this.calculoDistanciaStrategy = medioTransporte.getCalculoDistanciaStrategy();
         this.distanciaTramo=this.calcularDistanciaTramo(ubicacionInicio,ubicacionFinal);
     }
 
@@ -74,17 +75,14 @@ public class Tramo {
     public void setMedioTransporte(Transporte medioTransporte) {
         this.medioTransporte = medioTransporte;
     }
+    
 
     public double calcularDistanciaTramo(Ubicacion ubicacionOrigen, Ubicacion ubicacionFinal) throws Exception{
-        if (this.getMedioTransporte() instanceof TransportePrivado){
-            this.setCalculoDistanciaStrategy(new TransportePrivadoStrategy());
+
             return calculoDistanciaStrategy.calcularDistancia(ubicacionOrigen, ubicacionFinal);
-        }
-        else {
-            this.setCalculoDistanciaStrategy(new TransportePublicoStrategy());
-            return calculoDistanciaStrategy.calcularDistancia(ubicacionOrigen, ubicacionFinal);
-        }
+
     }
+
 
     public double calcularHCTramo(){
         try {
