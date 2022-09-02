@@ -10,6 +10,16 @@ public class MedicionLogistica extends Medicion{
     Double distanciaRecorrida;
     Double pesoTotal;
 
+    public FactorEmision getFactorEmision() {
+        return factorEmision;
+    }
+
+    public void setFactorEmision(FactorEmision factorEmision) {
+        this.factorEmision = factorEmision;
+    }
+
+    FactorEmision factorEmision;
+
     public MedicionLogistica(String actividad, String periodicidad, String periodo) {
         super(actividad, periodicidad, periodo);
     }

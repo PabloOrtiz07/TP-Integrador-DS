@@ -38,19 +38,13 @@ public class CalculadoraHC {
     public double calcularHCOrganizacion(Organizacion organizacion, List<MedicionLogistica> medicionesLogistica, List<MedicionOtros> medicionOtros) throws Exception {
         Double hcTrayectos = calcularHcTrayectosOrganizacion(organizacion);
         Double hcDatosActividadLogistica = calculadoraHCDatosActividad.calculoHCActividadLogistica(medicionesLogistica,getFactorK());
-        Double hcDatosActividadOtros= calculadoraHCDatosActividad.calculoHCActividadOtros(medicionOtros,getFactorK());
+        Double hcDatosActividadOtros= calculadoraHCDatosActividad.calculoHCActividadOtros(medicionOtros);
         return hcTrayectos + hcDatosActividadLogistica + hcDatosActividadOtros;
     }
 
     public double calcularHcTrayectosPersonal(List<Trayecto> trayectos) throws Exception {
         return calculadoraHCTrayecto.calcularHCTrayectoPorMes(trayectos);
     }
-
-  /*  public double calcularHcTrayectosOrganizacion(Organizacion organizacion){
-        organizacion.getAreas().stream().map(area -> miembros = area.getMiembrosArea());
-        return miembros.stream().map(miembro -> miembro.calcularHCPersonal()).sum();
-    }*/
-
 
     public double calcularHcTrayectosOrganizacion(Organizacion organizacion){
         List<Miembro> miembros = new ArrayList<>();
