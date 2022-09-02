@@ -1,14 +1,17 @@
 package Dominio.Viajes;
 
 import Dominio.Entidades.Miembro;
-import Dominio.Transportes.CalculoDistanciaStrategy;
+import Dominio.Transportes.*;
 import Dominio.Viajes.Trayecto;
 import Dominio.Lugares.Ubicacion;
-import Dominio.Transportes.Transporte;
+
 import java.util.*;
 
 public class Tramo {
     protected  CalculoDistanciaStrategy calculoDistanciaStrategy;
+    public void setCalculoDistanciaStrategy(CalculoDistanciaStrategy calculoDistanciaStrategy) {
+        this.calculoDistanciaStrategy = calculoDistanciaStrategy;
+    }
     public Tramo(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Transporte medioTransporte, List<Miembro> miembros) throws Exception {
         if(!medioTransporte.puedeCompartirse() && miembros.size()>1) throw new RuntimeException("El medio de transporte de este tramo no puede ser compartido");
 
@@ -73,7 +76,14 @@ public class Tramo {
     }
 
     public double calcularDistanciaTramo(Ubicacion ubicacionOrigen, Ubicacion ubicacionFinal) throws Exception{
-        return calculoDistanciaStrategy.calcularDistancia(ubicacionOrigen, ubicacionFinal);
+        if (this.getMedioTransporte() instanceof TransportePrivado){
+            this.setCalculoDistanciaStrategy(new TransportePrivadoStrategy());
+            return calculoDistanciaStrategy.calcularDistancia(ubicacionOrigen, ubicacionFinal);
+        }
+        else {
+            this.setCalculoDistanciaStrategy(new TransportePublicoStrategy());
+            return calculoDistanciaStrategy.calcularDistancia(ubicacionOrigen, ubicacionFinal);
+        }
     }
 
     public double calcularHCTramo(){
