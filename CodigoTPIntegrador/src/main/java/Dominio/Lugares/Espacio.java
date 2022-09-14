@@ -1,11 +1,18 @@
 package Dominio.Lugares;
 
-public class Espacio extends Ubicacion{
+public class Espacio {
     private TipoEspacio tipoEspacio;
-    public Espacio(String pais, String provincia, String localidad, String municipio, String calle, String altura, TipoEspacio tipoEspacio) {
-        super(pais,provincia,localidad,municipio,calle,altura);
+    private Ubicacion ubicacion;
+    public Espacio(Ubicacion ubicacion, TipoEspacio tipoEspacio) {
+        this.ubicacion=ubicacion;
         this.tipoEspacio = tipoEspacio;
     }
 
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
 
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 }

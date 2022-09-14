@@ -115,18 +115,18 @@ public class Organizacion {
     }
 
     public Boolean estaEnLaProvincia(String provincia){
-        return espacio.getProvincia().equals(provincia);
+        return espacio.getUbicacion().getProvincia().equals(provincia);
     }
 
     public Boolean estaEnElMunicipio(String municipio){
-        return espacio.getMunicipio().equals(municipio);
+        return espacio.getUbicacion().getMunicipio().equals(municipio);
     }
 
     public List<Trayecto> getTrayectosOrganizacion(){
         return areas.stream().flatMap(area -> area.getTrayectosMiembrosArea().stream()).collect(Collectors.toList());
     }
     public Ubicacion getUbicacion(){
-        return this.espacio;
+        return this.espacio.getUbicacion();
     }
 
 

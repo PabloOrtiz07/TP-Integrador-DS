@@ -42,15 +42,14 @@ public class DistanciaApiCalls {
 
     public DistanciaResponse calcularDistancia(Ubicacion ubicacionOrigen, Ubicacion ubicacionFinal) throws Exception {
 
-        int localidadOrigenId = obtenerIdLocalidad(ubicacionOrigen);
-        int localidadFinalId = obtenerIdLocalidad(ubicacionFinal);
+
 
         Response response = clientUsers
                 .replacePath("/distancia")
-                .query("localidadOrigenId", localidadOrigenId)
+                .query("localidadOrigenId", ubicacionOrigen.getLocalidad())
                 .query("calleOrigen", ubicacionOrigen.getCalle())
                 .query("alturaOrigen", ubicacionOrigen.getAltura())
-                .query("localidadDestinoId", localidadFinalId)
+                .query("localidadDestinoId", ubicacionFinal.getLocalidad())
                 .query("calleDestino", ubicacionFinal.getCalle())
                 .query("alturaDestino", ubicacionFinal.getAltura())
                 .get();
@@ -65,38 +64,4 @@ public class DistanciaApiCalls {
         }
     }
 
-
-    private int obtenerIdLocalidad(Ubicacion ubicacion) throws Exception {
-        clientUsers.replacePath("/paises");
-        int paisId = busquedaIdGenerico(ubicacion.getPais());
-
-        clientUsers.replacePath("/provincias")
-                   .replaceQueryParam("paisId", paisId);
-        int provinciaId = busquedaIdGenerico(ubicacion.getProvincia());
-
-        clientUsers.replacePath("/municipios")
-                   .replaceQueryParam("provinciaId", provinciaId);
-        int municipioId = busquedaIdGenerico(ubicacion.getMunicipio());
-
-        clientUsers.replacePath("/localidades")
-                   .replaceQueryParam("municipioId", municipioId);
-        return busquedaIdGenerico(ubicacion.getLocalidad());
-    }
-
-    private int busquedaIdGenerico(String nombre) throws Exception {
-
-        int offset = 1;
-        while (true){
-            Response response = clientUsers.replaceQueryParam("offset", offset).get();
-
-            String responseBody = response.readEntity(String.class);
-            ApiDatosUbicacionResponse[] datosUbicacion = objectMapper.readValue(responseBody, ApiDatosUbicacionResponse[].class);
-            if(datosUbicacion.length == 0) break;
-
-            for (int i = 0; i < datosUbicacion.length; i++)
-                if (datosUbicacion[i].getNombre().equals(nombre)) return datosUbicacion[i].getId();
-            offset++;
-        }
-        throw new Exception("No se encontro el dato");
-    }
 }

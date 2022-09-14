@@ -3,12 +3,12 @@ package Dominio.Lugares;
 public class Ubicacion {
    protected String pais;
    protected String provincia;
-   protected String localidad;
+   protected Integer localidad;
    protected String municipio;
    protected String calle;
    protected String altura;
 
-   public Ubicacion(String pais, String provincia, String localidad, String municipio, String calle, String altura) {
+   public Ubicacion(String pais, String provincia, Integer localidad, String municipio, String calle, String altura) {
       this.pais = pais;
       this.provincia = provincia;
       this.localidad = localidad;
@@ -16,6 +16,16 @@ public class Ubicacion {
       this.calle = calle;
       this.altura = altura;
    }
+
+
+   public Integer getLocalidad() {
+      return localidad;
+   }
+
+   public void setLocalidad(Integer localidad) {
+      this.localidad = localidad;
+   }
+
 
    public String getPais() {
       return pais;
@@ -33,13 +43,6 @@ public class Ubicacion {
       this.provincia = provincia;
    }
 
-   public String getLocalidad() {
-      return localidad;
-   }
-
-   public void setLocalidad(String localidad) {
-      this.localidad = localidad;
-   }
 
    public String getMunicipio() {
       return municipio;

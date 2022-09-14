@@ -161,7 +161,8 @@ public class Main {
         String[] datosUbicacion = cargarDatosUbicacion();
         System.out.println("Ingresa los dias habiles por semana de la organizacion");
         Double diasHabilesIngresado = entrada.nextDouble();
-        Espacio espacioOrg = new Espacio(datosUbicacion[0],datosUbicacion[1],datosUbicacion[2],datosUbicacion[3],datosUbicacion[4],datosUbicacion[5], TipoEspacio.TRABAJO);
+        Ubicacion ubicacionOrg = new Ubicacion(datosUbicacion[0],datosUbicacion[1],Integer.parseInt(datosUbicacion[2]),datosUbicacion[3],datosUbicacion[4],datosUbicacion[5]);
+        Espacio espacioOrg = new Espacio(ubicacionOrg, TipoEspacio.TRABAJO);
         Organizacion organizacion = new Organizacion(razonSocial,tipoOrganizacion,tipoClasificacion, espacioOrg,diasHabilesIngresado);
 
         System.out.println("Agregue las areas de la organizacion");
@@ -225,7 +226,7 @@ public class Main {
             String[] datosUbicacion = cargarDatosUbicacion();
             System.out.println("Agregue la distancia a la proxima parada");
             double distanciaSig = entrada.nextDouble();
-            Parada parada = new Parada(datosUbicacion[0],datosUbicacion[1],datosUbicacion[2],datosUbicacion[3],datosUbicacion[4],datosUbicacion[5],distanciaSig);
+            Parada parada = new Parada(datosUbicacion[0],datosUbicacion[1],Integer.parseInt(datosUbicacion[2]),datosUbicacion[3],datosUbicacion[4],datosUbicacion[5],distanciaSig);
             transporte.agregarParada(parada);
             System.out.println("¿Quiere agregar otra parada? (y/n)");
         }while(entrada.nextLine().equalsIgnoreCase("y"));
