@@ -1,0 +1,8 @@
+Actividad;TipoDeConsumo;Consumo;;Periodo de imputacion
+Combustion Fija;Gas Natural;20;mensual;oct-01
+Combustion Movil;Nafta;12.12;anual;2002
+Electricidad adquirida y consumida;Electricidad;20.20;mensual;mar-03
+Logistica de productos y residuos;materia prima;0;mensual;sep-08
+Logistica de productos y residuos;camion de carga;10.0;mensual;sep-08
+Logistica de productos y residuos;distancia;100;mensual;sep-08
+Logistica de productos y residuos;peso;1000;mensual;sep-08
