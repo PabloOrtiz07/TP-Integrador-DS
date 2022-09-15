@@ -3,6 +3,7 @@ package Dominio.Transportes;
 import Apis.DistanciaApiCalls;
 import Apis.dto.DistanciaResponse;
 import Dominio.Lugares.Ubicacion;
+import Dominio.Medicion.FactorEmision;
 
 public class TransportePrivado extends Transporte{
     private boolean esServicioContratado;
@@ -10,13 +11,14 @@ public class TransportePrivado extends Transporte{
     private TipoCombustible tipoDeCombustible;
     private TipoVehiculoParticular tipoTransporteVehiculo;
 
-    public TransportePrivado(boolean esServicioContratado, String tipoServicio, TipoCombustible tipoDeCombustible, TipoVehiculoParticular tipoTransporteVehiculo) {
+    public TransportePrivado(boolean esServicioContratado, String tipoServicio, TipoCombustible tipoDeCombustible, TipoVehiculoParticular tipoTransporteVehiculo, FactorEmision factorEmisor) {
         this.esServicioContratado = esServicioContratado;
         this.tipoServicio = tipoServicio;
         this.tipoDeCombustible = tipoDeCombustible;
         this.tipoTransporteVehiculo = tipoTransporteVehiculo;
         this.puedeCompartirse = true;
         this.calculoDistanciaStrategy = new TransportePrivadoStrategy();
+        setFactorEmision(factorEmisor);
     }
 
     public boolean getEsServicioContratado() {

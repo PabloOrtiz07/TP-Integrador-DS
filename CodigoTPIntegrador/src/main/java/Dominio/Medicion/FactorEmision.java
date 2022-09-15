@@ -24,4 +24,6 @@ public class FactorEmision {
     public void setUnidad(String unidad) {
         this.unidad = unidad;
     }
+
+
 }

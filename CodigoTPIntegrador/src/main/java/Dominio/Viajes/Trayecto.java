@@ -32,9 +32,11 @@ public class Trayecto {
 
     private List<Tramo> tramosTrayecto = new ArrayList<>();
 
-    public Trayecto(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal){
+    public Trayecto(Ubicacion ubicacionInicio, Ubicacion ubicacionFinal, Integer diasHabiles, Integer diasDeUsoEnLaSemana){
         this.ubicacionInicio = ubicacionInicio;
         this.ubicacionFinal = ubicacionFinal;
+        this.diasDeUsoEnLaSemana=diasDeUsoEnLaSemana;
+        this.pesoTrayecto = calcularPesoTrayecto(diasHabiles);
     }
     public Ubicacion getUbicacionInicio() {
         return ubicacionInicio;
