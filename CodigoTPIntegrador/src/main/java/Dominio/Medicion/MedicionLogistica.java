@@ -1,7 +1,5 @@
 package Dominio.Medicion;
 
-import Dominio.Transportes.Transporte;
-
 import java.time.LocalDate;
 
 public class MedicionLogistica extends Medicion{
@@ -12,7 +10,7 @@ public class MedicionLogistica extends Medicion{
 
     FactorEmision factorEmision;
 
-    public MedicionLogistica(String actividad, String periodicidad, String periodo) {
+    public MedicionLogistica(String actividad, String periodicidad, String periodo, LocalDate fecha) {
         super(actividad, periodicidad, periodo);
     }
 

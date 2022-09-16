@@ -1,11 +1,14 @@
 package Dominio.Medicion;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Medicion {
     private String actividad;
     private String periodoDeImputacion;
     private String periodo;
+
+    private LocalDate fecha;
 
     public String getActividad() {
         return actividad;
@@ -39,5 +42,18 @@ public abstract class Medicion {
     public abstract double hcMedicion(double k);
 
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public Double mesCerrado() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String fechaString =  fecha.format(formatter);
+        Double mes = Double.parseDouble(fechaString.substring(3,4));
+        return mes - 1;
+    }
 }

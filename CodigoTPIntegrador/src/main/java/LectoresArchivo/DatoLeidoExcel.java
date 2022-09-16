@@ -50,9 +50,7 @@ public class DatoLeidoExcel {
         this.periodoDeImputacion = periodoDeImputacion;
     }
 
-    public String getPerioicidad() {
-        return perioicidad;
-    }
+    public String getPerioicidad() { return perioicidad; }
 
     public void setPerioicidad(String perioicidad) {
         this.perioicidad = perioicidad;
