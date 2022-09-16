@@ -41,7 +41,6 @@ public class DistanciaApiCallsTests {
         Ubicacion ubicacionFin = new Ubicacion("Argentina", "Buenos aires", 15, "Caballito", "Avenida Rivadavia","4900");
         Espacio espacioFin = new Espacio(ubicacionFin,TipoEspacio.TRABAJO);
         DistanciaResponse distanciaResponse = distanciaApiCalls.calcularDistancia(ubicacionInicio,ubicacionFin);
-        System.out.println(distanciaResponse.getValor());
-
+        Assertions.assertEquals("10",distanciaResponse.getValor());
     }
 }

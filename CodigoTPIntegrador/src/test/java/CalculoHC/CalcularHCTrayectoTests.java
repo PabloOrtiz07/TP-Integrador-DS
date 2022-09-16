@@ -7,12 +7,10 @@ import Dominio.Lugares.Espacio;
 import Dominio.Lugares.TipoEspacio;
 import Dominio.Lugares.Ubicacion;
 import Dominio.Medicion.FactorEmision;
-import Dominio.Transportes.TipoCombustible;
-import Dominio.Transportes.TipoVehiculoParticular;
-import Dominio.Transportes.Transporte;
-import Dominio.Transportes.TransportePrivado;
+import Dominio.Transportes.*;
 import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,51 +24,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;/*
-@ExtendWith(MockitoExtension.class)
+import static org.mockito.Mockito.*;
 
 public class CalcularHCTrayectoTests {
 
     Miembro miembroPruebaUno;
 
-    Ubicacion ubicacionInicio;
-
-    Ubicacion ubicacionFin;
-
     Trayecto trayectoUnoPrueba;
 
-    Tramo    tramoConTransportePrivado;
-
-    FactorEmision factorEmision;
-    @Mock
 
     private DistanciaApiCalls distanciaApiCalls;
 
+    TransportePrivadoStrategy transportePrivadoStrategy;
+
+    FactorEmision factorEmision;
+
     @BeforeEach
     void setup() throws Exception {
-
-        Mockito.when(distanciaApiCalls.calcularDistancia(any(Ubicacion.class),any(Ubicacion.class))).thenReturn( new DistanciaResponse("100.00","KM"));
-        ubicacionInicio = generarUbicacionInicioPruebaUno();
-        ubicacionFin = generarUbicacionFinPruebaUno();
-        Espacio espacioInicio = new Espacio(ubicacionInicio, TipoEspacio.HOGAR);
-        Espacio espacioFin = new Espacio(ubicacionFin, TipoEspacio.TRABAJO);
-        Organizacion google = generarOrganizacionGoogle(espacioFin.getUbicacion());
-        Persona personaUnoPrueba = generarPersonaPruebaUno();
-        TransportePrivado transportePrivado = generarTransportePrivado();
-        miembroPruebaUno = new Miembro(personaUnoPrueba);
-        miembroPruebaUno.enviarSolicitud(google, "marketing");
-        google.aceptarSolicitud(miembroPruebaUno);
-        List<Miembro> miembrosViaje = new ArrayList<>();
-        miembrosViaje.add(miembroPruebaUno);
-        tramoConTransportePrivado = generarTramoTransportePrivado(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),transportePrivado,miembrosViaje);
-        List<Tramo> tramos = new ArrayList<Tramo>();
-        tramos.add(tramoConTransportePrivado);
-        List<Trayecto> trayectos = new ArrayList<>();
-        trayectoUnoPrueba = generarTrayecto(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),5,5);
-        trayectoUnoPrueba.agregarTramo(tramoConTransportePrivado);
-        miembroPruebaUno.cargarTrayecto(trayectoUnoPrueba);
-
-
+        transportePrivadoStrategy = mock(TransportePrivadoStrategy.class);
+        when(transportePrivadoStrategy.calcularDistancia(any(Ubicacion.class),any(Ubicacion.class))).thenReturn(10.00);
     }
 
 
@@ -123,10 +95,53 @@ public class CalcularHCTrayectoTests {
     }
 
     @Test
-    public void calcularPorMiembroTransportePrivado() throws Exception {
+    public void calcularTransportePrivadoStrategy() throws Exception {
+        Ubicacion ubicacionInicio = generarUbicacionInicioPruebaUno();
+        Ubicacion ubicacionFin = generarUbicacionFinPruebaUno();
+        Assertions.assertEquals(10.0,transportePrivadoStrategy.calcularDistancia(ubicacionInicio,ubicacionFin));
+    }
 
-        Mockito.verify(distanciaApiCalls).calcularDistancia(ubicacionInicio,ubicacionFin);
-        System.out.println(tramoConTransportePrivado.calcularHCTramo());
+    @Test
+    public void calcularUnTramoDeMiembroConTransportePrivado() throws Exception {
+        Ubicacion ubicacionInicio = generarUbicacionInicioPruebaUno();
+        Ubicacion ubicacionFin = generarUbicacionFinPruebaUno();
+        Espacio espacioInicio = new Espacio(ubicacionInicio, TipoEspacio.HOGAR);
+        Espacio espacioFin = new Espacio(ubicacionFin, TipoEspacio.TRABAJO);
+        Organizacion google = generarOrganizacionGoogle(espacioFin.getUbicacion());
+        Persona personaUnoPrueba = generarPersonaPruebaUno();
+        TransportePrivado transportePrivado = generarTransportePrivado();
+        miembroPruebaUno = new Miembro(personaUnoPrueba);
+        miembroPruebaUno.enviarSolicitud(google, "marketing");
+        google.aceptarSolicitud(miembroPruebaUno);
+        List<Miembro> miembrosViaje = new ArrayList<>();
+        miembrosViaje.add(miembroPruebaUno);
+        Tramo tramoConTransportePrivado = generarTramoTransportePrivado(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),transportePrivado,miembrosViaje);
+        Assertions
+                .assertEquals(1000.0,transportePrivadoStrategy.calcularDistancia(ubicacionInicio,ubicacionFin)
+                        *tramoConTransportePrivado.getMedioTransporte().getFactorEmision().getValor()/tramoConTransportePrivado.getMiembrosTramo().size());
+    }
+
+    @Test
+    public void calcularUnTramoConDosMiembrosConTransportePrivado() throws Exception {
+        Ubicacion ubicacionInicio = generarUbicacionInicioPruebaUno();
+        Ubicacion ubicacionFin = generarUbicacionFinPruebaUno();
+        Espacio espacioInicio = new Espacio(ubicacionInicio, TipoEspacio.HOGAR);
+        Espacio espacioFin = new Espacio(ubicacionFin, TipoEspacio.TRABAJO);
+        Organizacion google = generarOrganizacionGoogle(espacioFin.getUbicacion());
+        Persona personaUnoPrueba = generarPersonaPruebaUno();
+        TransportePrivado transportePrivado = generarTransportePrivado();
+        miembroPruebaUno = new Miembro(personaUnoPrueba);
+        miembroPruebaUno.enviarSolicitud(google, "marketing");
+        google.aceptarSolicitud(miembroPruebaUno);
+        Miembro miembroPruebaDos = new Miembro(personaUnoPrueba);
+        miembroPruebaDos.enviarSolicitud(google, "marketing");
+        google.aceptarSolicitud(miembroPruebaDos);
+        List<Miembro> miembrosViaje = new ArrayList<>();
+        miembrosViaje.add(miembroPruebaDos);
+        miembrosViaje.add(miembroPruebaUno);
+        Tramo tramoConTransportePrivado = generarTramoTransportePrivado(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),transportePrivado,miembrosViaje);
+        Assertions
+                .assertEquals(500.0,transportePrivadoStrategy.calcularDistancia(ubicacionInicio,ubicacionFin)
+                        *tramoConTransportePrivado.getMedioTransporte().getFactorEmision().getValor()/tramoConTransportePrivado.getMiembrosTramo().size());
     }
 }
-*/
