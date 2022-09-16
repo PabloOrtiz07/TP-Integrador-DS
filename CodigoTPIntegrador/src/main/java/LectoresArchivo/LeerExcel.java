@@ -53,7 +53,8 @@ public class LeerExcel {
     }
 
     public MedicionLogistica crearMedicionLogistica(DatoLeidoExcel datoLeidoExcel){
-         MedicionLogistica medicionLogistica = new MedicionLogistica(datoLeidoExcel.getActividad(),datoLeidoExcel.getPeriodoDeImputacion(),datoLeidoExcel.getPerioicidad()); // aca faltaria llenar con los demas datos pero no me doy cuenta
+         LocalDate fecha = LocalDate.now();
+         MedicionLogistica medicionLogistica = new MedicionLogistica(datoLeidoExcel.getActividad(),datoLeidoExcel.getPeriodoDeImputacion(),datoLeidoExcel.getPerioicidad(), fecha); // aca faltaria llenar con los demas datos pero no me doy cuenta
          return  medicionLogistica;
     }
 
@@ -62,7 +63,8 @@ public class LeerExcel {
     }
 
     public MedicionOtros crearMedicionOtro(DatoLeidoExcel datoLeidoExcel){
-        MedicionOtros medicionOtros = new MedicionOtros(datoLeidoExcel.getActividad(),datoLeidoExcel.getPeriodoDeImputacion(),datoLeidoExcel.getPerioicidad(),datoLeidoExcel.getTipoDeConsumo(),datoLeidoExcel.getConsumo()); // aca faltaria llenar con los demas datos pero no me doy cuenta
+        LocalDate fecha = LocalDate.now();
+        MedicionOtros medicionOtros = new MedicionOtros(datoLeidoExcel.getActividad(),datoLeidoExcel.getPeriodoDeImputacion(),datoLeidoExcel.getPerioicidad(),datoLeidoExcel.getTipoDeConsumo(),datoLeidoExcel.getConsumo(), fecha); // aca faltaria llenar con los demas datos pero no me doy cuenta
         return  medicionOtros;
     }
 

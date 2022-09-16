@@ -17,7 +17,7 @@ public class MedicionOtros extends Medicion {
         this.factorEmision = factorEmision;
     }
 
-    public MedicionOtros(String actividad, String periodicidad, String periodo, String tipoConsumo, Double valor) {
+    public MedicionOtros(String actividad, String periodicidad, String periodo, String tipoConsumo, Double valor, LocalDate fecha) {
         super(actividad, periodicidad, periodo);
         this.tipoConsumo = tipoConsumo;
         this.valor = valor;
