@@ -1,5 +1,7 @@
 package CalculoHC;
 
+import Apis.DistanciaApiCalls;
+import Apis.dto.DistanciaResponse;
 import Dominio.Entidades.*;
 import Dominio.Lugares.Espacio;
 import Dominio.Lugares.TipoEspacio;
@@ -11,20 +13,45 @@ import Dominio.Transportes.Transporte;
 import Dominio.Transportes.TransportePrivado;
 import Dominio.Viajes.Tramo;
 import Dominio.Viajes.Trayecto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.exceptions.base.MockitoException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;/*
+@ExtendWith(MockitoExtension.class)
 
 public class CalcularHCTrayectoTests {
 
     Miembro miembroPruebaUno;
 
+    Ubicacion ubicacionInicio;
+
+    Ubicacion ubicacionFin;
+
+    Trayecto trayectoUnoPrueba;
+
+    Tramo    tramoConTransportePrivado;
+
+    FactorEmision factorEmision;
+    @Mock
+
+    private DistanciaApiCalls distanciaApiCalls;
+
     @BeforeEach
     void setup() throws Exception {
-        Ubicacion ubicacionInicio = generarUbicacionInicioPruebaUno();
-        Ubicacion ubicacionFin = generarUbicacionFinPruebaUno();
+
+        Mockito.when(distanciaApiCalls.calcularDistancia(any(Ubicacion.class),any(Ubicacion.class))).thenReturn( new DistanciaResponse("100.00","KM"));
+        ubicacionInicio = generarUbicacionInicioPruebaUno();
+        ubicacionFin = generarUbicacionFinPruebaUno();
         Espacio espacioInicio = new Espacio(ubicacionInicio, TipoEspacio.HOGAR);
         Espacio espacioFin = new Espacio(ubicacionFin, TipoEspacio.TRABAJO);
         Organizacion google = generarOrganizacionGoogle(espacioFin.getUbicacion());
@@ -35,14 +62,17 @@ public class CalcularHCTrayectoTests {
         google.aceptarSolicitud(miembroPruebaUno);
         List<Miembro> miembrosViaje = new ArrayList<>();
         miembrosViaje.add(miembroPruebaUno);
-        Tramo tramoConTransportePrivado = generarTramoTransportePrivado(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),transportePrivado,miembrosViaje);
+        tramoConTransportePrivado = generarTramoTransportePrivado(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),transportePrivado,miembrosViaje);
         List<Tramo> tramos = new ArrayList<Tramo>();
         tramos.add(tramoConTransportePrivado);
         List<Trayecto> trayectos = new ArrayList<>();
-        Trayecto trayectoUnoPrueba = generarTrayecto(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),5,5);
+        trayectoUnoPrueba = generarTrayecto(espacioInicio.getUbicacion(),espacioFin.getUbicacion(),5,5);
         trayectoUnoPrueba.agregarTramo(tramoConTransportePrivado);
         miembroPruebaUno.cargarTrayecto(trayectoUnoPrueba);
+
+
     }
+
 
     public Organizacion generarOrganizacionGoogle(Ubicacion ubicacionFin) throws Exception {
         Espacio espacioFin = new Espacio(ubicacionFin, TipoEspacio.TRABAJO);
@@ -62,7 +92,7 @@ public class CalcularHCTrayectoTests {
         return  trayectoUnoPrueba;
     }
     public TransportePrivado generarTransportePrivado(){
-        FactorEmision factorEmision=generarFactor();
+        factorEmision=generarFactor();
         TransportePrivado transportePrivado = new TransportePrivado(true, "uber", TipoCombustible.GASOIL, TipoVehiculoParticular.AUTO,factorEmision);
         return  transportePrivado;
     }
@@ -94,7 +124,9 @@ public class CalcularHCTrayectoTests {
 
     @Test
     public void calcularPorMiembroTransportePrivado() throws Exception {
-        System.out.println(miembroPruebaUno.calcularHCPersonal());
 
+        Mockito.verify(distanciaApiCalls).calcularDistancia(ubicacionInicio,ubicacionFin);
+        System.out.println(tramoConTransportePrivado.calcularHCTramo());
     }
 }
+*/

@@ -1,7 +1,7 @@
 package Apis.dto;
 
 public class DistanciaResponse {
-   private String valor;
+   public String valor;
    private String unidad;
 
     public String getValor() {
@@ -19,4 +19,5 @@ public class DistanciaResponse {
     public void setUnidad(String unidad) {
         this.unidad = unidad;
     }
+
 }

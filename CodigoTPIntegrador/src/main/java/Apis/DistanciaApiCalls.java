@@ -3,6 +3,7 @@ package Apis;
 
 import Apis.dto.*;
 import Dominio.Lugares.Ubicacion;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.cxf.jaxrs.client.WebClient;
@@ -41,8 +42,6 @@ public class DistanciaApiCalls {
     }
 
     public DistanciaResponse calcularDistancia(Ubicacion ubicacionOrigen, Ubicacion ubicacionFinal) throws Exception {
-
-
 
         Response response = clientUsers
                 .replacePath("/distancia")

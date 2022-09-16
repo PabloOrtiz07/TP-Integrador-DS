@@ -17,6 +17,8 @@ public class Miembro {
     private List<Trayecto> trayectos = new ArrayList<>();
     private CalculadoraHC calculadoraHC = new CalculadoraHC();
 
+    private Double HCPersonal;
+
     public LocalDate getFechaDeIngreso() {
         return fechaDeIngreso;
     }
@@ -94,8 +96,16 @@ public class Miembro {
         return calculadoraHC.calcularHcTrayectosPersonal(this.trayectos);
     }
 
+    public void agregarHCPersonal() throws Exception {
+        this.HCPersonal=calcularHCPersonal();
+    }
+
     public double impactoMiembroEnHCOrg() throws Exception {
         return this.calcularHCPersonal() * 100 / this.areaPertenece.getOrganizacion().calcularHC();
+    }
+
+    public Double getHCPersonal() {
+        return HCPersonal;
     }
 
     /**/
