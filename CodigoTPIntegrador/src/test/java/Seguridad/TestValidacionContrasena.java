@@ -1,5 +1,5 @@
-package CalculoHC;
-/*
+package Seguridad;
+
 import Seguridad.Usuario;
 import Seguridad.ValidadorContrasenaSegura;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,4 +75,3 @@ public class TestValidacionContrasena {
     }
 
 }
-*/ // no funciona y nose porque despues voy a ver

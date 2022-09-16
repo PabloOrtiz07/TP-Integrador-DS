@@ -15,6 +15,10 @@ public class Usuario {
     private final String nombre;
     private final String contrasena;
 
+    public String getContrasena() {
+        return contrasena;
+    }
+
     private Miembro miembroAsociado;
     private int cantidadIntentosFallidos = 0;
     private LocalTime horaDesbloqueo;
